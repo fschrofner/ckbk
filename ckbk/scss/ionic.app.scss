@@ -21,3 +21,169 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+@font-face {
+    font-family: OpenSansLight;
+    src: url("/fonts/open-sans/OpenSans-Light.ttf") format("opentype");
+}
+
+@font-face{
+    font-family: OpenSansRegular;
+    src: url("/fonts/open-sans/OpenSans-Regular.ttf") format("opentype");
+}
+
+@font-face{
+    font-family: OpenSansBold;
+    src: url("/fonts/open-sans/OpenSans-Bold.ttf") format("opentype");
+}
+
+//defining colors
+$header-color: #ef473a;
+$header-font-color: #fff;
+
+$sidemenu-header-color: $header-color;
+$sidemenu-background-color: #e54236;
+$sidemenu-font-color: #fff;
+$sidemenu-border-color: #cc3a30;
+
+$body-accent-color: $energized;
+$body-accent-font-color: $header-font-color;
+$body-accent-color-darker: #e6b500;
+
+.header {
+    font-family: OpenSansRegular;
+    background-color: $header-color;
+    color: $header-font-color;
+    text-align: center;
+
+    #menu-button, #create-button, #recipe-save-button {
+	@extend .header;
+    }
+
+    .button-clear {
+	@extend .header;
+	font-family: OpenSansLight;
+    }
+}
+
+.sidemenu {
+    font-family: OpenSansRegular;
+    color: $sidemenu-font-color;
+    border-color: $sidemenu-border-color;
+
+    ion-header-bar {
+	background-color: $sidemenu-header-color;
+	background-image: none;
+	border-color: $sidemenu-border-color;
+
+	h1 {
+	    @extend .sidemenu;
+	}
+    }
+
+    ion-content, ion-item, ion-list, .item-content {
+	@extend .sidemenu;
+	background-color: $sidemenu-background-color;
+	border-color: $sidemenu-border-color;
+    }
+
+    .item.activated, .item-content.activated {
+	@extend .sidemenu;
+	background-color: $sidemenu-border-color;
+	border-color: $sidemenu-border-color;
+    }
+
+    a {
+	color: $sidemenu-font-color;
+    }
+}
+
+body {
+    font-family: OpenSansRegular;
+    
+    .add-ingredient-button {
+	@extend .item;
+	@extend .item-divider;
+	@extend .button;
+	@extend .button-full;
+	
+	margin-top: 0px;
+	margin-bottom: 0px;
+	color: $body-accent-font-color;
+	background-color: $body-accent-color;
+	padding: 0px;
+    }
+
+    .add-ingredient-button:hover {
+	@extend .add-ingredient-button;
+	background-color: $body-accent-color-darker;
+    }
+
+    .ingredient-input {
+	//@extend .body;
+    }
+
+    .browse-recipe-title{
+	//@extend .body;
+	font-family: OpenSansBold;
+	font-size: bigger;
+	text-align: center;
+	font-weight: bold;
+    }
+
+    .browse-recipe-icon{
+	color: black;
+    }
+
+    .view-name{
+	@extend .item;
+	text-align: center;
+	color: $body-accent-font-color;
+	background-color: $body-accent-color;
+	font-family: OpenSansBold;
+	font-size: bigger;
+	font-weight: bold;
+    }
+
+    .view-category{
+	font-family: OpenSansLight;
+	font-size: smaller;
+    }
+    
+    .view-time{
+	font-family: OpenSansLight;
+	font-size: smaller;
+    }
+
+    .view-flag{
+	font-family: OpenSansLight;
+	font-size: smaller;	
+    }
+
+    .view-ingredient{
+	font-family: OpenSansRegular;
+	font-size: medium;
+	text-align: left;
+	padding-left: 20px;
+    }
+
+    .view-direction{
+	font-family: OpenSansRegular;
+	font-size: medium;
+	text-align: left;
+	padding-left: 20px;
+    }
+
+    .edit-time-label{
+	font-family: OpenSansLight;
+	font-size: smaller;
+    }
+
+    .browse-recipe-data{
+	font-family: OpenSansRegular;
+	font-size: medium;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+    }
+}
+

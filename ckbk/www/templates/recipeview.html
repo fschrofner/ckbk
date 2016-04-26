@@ -1,0 +1,96 @@
+<ion-view view-title="Recipe">
+  <ion-content>
+
+      <!-- card for the general information of the recipe-->
+      <div class="list card">
+	<!-- name text field -->
+	<label class="view-name">
+	  {{recipe.name}}
+	</label>
+
+	<!-- preparation and cook time -->
+	<div class="item">
+
+	  <div class="row">
+	    
+	    <div class="col">
+	      <span class="view-category">
+		{{recipe.category}}
+	      </span>
+
+	      <br/>
+	      
+	      <span class="view-time">
+		<i class="icon ion-clock"></i>
+		<i class="icon ion-knife"></i>
+		{{recipe.prep_time}} min
+	      </span>
+
+	      <br/>
+	      
+	      <span class="view-time">
+		<i class="icon ion-clock"></i>
+		<i class="icon ion-flame"></i>
+		{{recipe.cook_time}} min
+	      </span>
+	    </div>
+
+	    <div class="col">
+	      <span ng-repeat="item in recipe.flags">
+		<span ng-show="item.checked" class="view-flag">
+		  <i class="icon ion-plus-round"></i>
+		  {{item.text}}
+		  <br/>
+		</span>
+	      </span>
+	    </div>
+	    
+	  </div>
+	 
+	  
+	</div>
+      </div>
+ 
+      <!-- list of ingredients -->
+      <div class="list card">
+
+          <div class="row item view-ingredient" ng-repeat="item in recipe.ingredients">
+	    <div class="col">
+	      {{item.ingredient}}
+	    </div>
+	    <div class="col">
+	      {{item.amount}}
+	    </div>
+          </div>    
+
+      </div>
+
+      <!-- list of directions -->
+      <div class="list card">
+
+          <div class="row item view-direction" ng-repeat="item in recipe.directions">
+	    <div class="col">
+	      {{$index+1}}.
+	    </div>
+	    <div class="col">
+	      {{item.text}}
+	    </div>
+          </div>    
+
+
+      </div>
+  </ion-content>
+</ion-view>
+
+
+
+
+
+
+
+
+
+
+
+
+
