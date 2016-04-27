@@ -1,0 +1,14 @@
+{
+  "name": "jquery.ns-autogrow",
+  "homepage": "https://github.com/ro31337/jquery.ns-autogrow",
+  "_release": "aae16e0559",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "aae16e0559ca03eb29b67e20ae4983d649d3b728"
+  },
+  "_source": "git://github.com/ro31337/jquery.ns-autogrow.git",
+  "_target": "*",
+  "_originalSource": "ro31337/jquery.ns-autogrow",
+  "_direct": true
+}

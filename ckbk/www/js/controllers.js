@@ -68,5 +68,56 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    console.log("platform ready");
 	    $scope.loadRecipes();
 	});
+
+	$scope.showRecipe = function(currRecipe){
+	    window.location.href='#/app/view/recipes/' + currRecipe.id;
+	}
+    })
+
+    .controller('RecipeCtrl', function($scope, $stateParams, $state, $cordovaSQLite, databaseService, $ionicPopup, $ionicPlatform, $ionicHistory) {
+	$scope.recipe = {};
+	
+	$scope.loadRecipe = function(){
+	    //todo load real values here, when a real recipe is opened
+	    $scope.loadDefaultValues($stateParams.recipeId);
+	}
+
+	$scope.loadDefaultValues = function(_id){
+	    $scope.recipe.id = _id;
+	    $scope.recipe.name = "";
+	    $scope.recipe.category = "Lunch";
+	    $scope.recipe.prep_time = 0;
+	    $scope.recipe.cook_time = 0;
+	    
+	    $scope.recipe.flags = [
+		{ text: "Vegan", checked: false },
+		{ text: "Vegetarian", checked: false },
+		{ text: "Glutenfree", checked: false }
+	    ];
+	    
+	    $scope.recipe.ingredients = [
+		{ingredient: "", amount: ""}
+	    ];
+	    
+	    $scope.recipe.directions = [{text:""}];
+	}
+
+	//call the load recipe method, when controller is started
+	$scope.loadRecipe();
+
+		$scope.addIngredientField = function() {
+	    $scope.recipe.ingredients.push({ingredient:"",amount:""});
+	    $scope.$apply();
+	}
+
+	$scope.addDirectionField = function() {
+	    $scope.recipe.directions.push({text:""});
+	    $scope.$apply();
+	}
+
+	$scope.saveRecipe = function(){
+	    //save recipe, then go to browse state
+	    $state.go('app.browse');
+	}
     });
 
