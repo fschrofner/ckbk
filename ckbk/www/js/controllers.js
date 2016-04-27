@@ -84,22 +84,27 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
 	$scope.loadDefaultValues = function(_id){
 	    $scope.recipe.id = _id;
-	    $scope.recipe.name = "";
+	    $scope.recipe.name = "Lasagna";
 	    $scope.recipe.category = "Lunch";
-	    $scope.recipe.prep_time = 0;
-	    $scope.recipe.cook_time = 0;
+	    $scope.recipe.prep_time = 30;
+	    $scope.recipe.cook_time = 60;
 	    
 	    $scope.recipe.flags = [
-		{ text: "Vegan", checked: false },
-		{ text: "Vegetarian", checked: false },
+		{ text: "Vegan", checked: true },
+		{ text: "Vegetarian", checked: true },
 		{ text: "Glutenfree", checked: false }
 	    ];
-	    
-	    $scope.recipe.ingredients = [
-		{ingredient: "", amount: ""}
+
+	    $scope.recipe.ingredients =  [
+		{ingredient: "Beef", amount: "500g"}
 	    ];
 	    
-	    $scope.recipe.directions = [{text:""}];
+	    $scope.recipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
+	    // $scope.recipe.ingredients = [
+	    // 	{ingredient: "", amount: ""}
+	    // ];
+	    
+	    // $scope.recipe.directions = [{text:""}];
 	}
 
 	//call the load recipe method, when controller is started
