@@ -55,7 +55,7 @@ $body-accent-color-darker: #e6b500;
     color: $header-font-color;
     text-align: center;
 
-    #menu-button, #create-button, #recipe-save-button {
+    #menu-button, #create-button, #recipe-save-button, #edit-button {
 	@extend .header;
     }
 

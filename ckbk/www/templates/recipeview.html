@@ -1,4 +1,8 @@
 <ion-view view-title="Recipe">
+ <ion-nav-buttons side="secondary">
+    <button class="button button-icon ion-edit" id="edit-button" onclick="window.location.href='#/app/recipes/'+ Date.now() + Math.floor((Math.random() * 100) + 1); ">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
 
       <!-- card for the general information of the recipe-->
@@ -7,53 +11,76 @@
 	<label class="view-name">
 	  {{recipe.name}}
 	</label>
+	
+	<div class="item">
+	<div class="col col-center">
+		<div class="item item-image">
+			<img src={{recipe.imageSource}}>
+		</div>
+		
+		<div class="row">
+			<button class="button button-icon ion-android-star"></button>
+			<button class="button button-icon ion-android-star"></button>
+			<button class="button button-icon ion-android-star"></button>
+			<button class="button button-icon ion-android-star-half"></button>
+			<button class="button button-icon ion-android-star-outline"></button>
+		</div>
+	</div>
+	</div>
 
 	<!-- preparation and cook time -->
 	<div class="item">
-
-	  <div class="row">
+		<div class="row">
 	    
-	    <div class="col">
-	      <span class="view-category">
-		{{recipe.category}}
-	      </span>
+			<div class="col">
+			  <span class="view-category">
+			{{recipe.category}}
+			  </span>
 
-	      <br/>
-	      
-	      <span class="view-time">
-		<i class="icon ion-clock"></i>
-		<i class="icon ion-knife"></i>
-		{{recipe.prep_time}} min
-	      </span>
+			  <br/>
+			  
+			  <span class="view-time">
+			<i class="icon ion-clock"></i>
+			<i class="icon ion-knife"></i>
+			{{recipe.prep_time}} min
+			  </span>
 
-	      <br/>
-	      
-	      <span class="view-time">
-		<i class="icon ion-clock"></i>
-		<i class="icon ion-flame"></i>
-		{{recipe.cook_time}} min
-	      </span>
-	    </div>
+			  <br/>
+			  
+			  <span class="view-time">
+			<i class="icon ion-clock"></i>
+			<i class="icon ion-flame"></i>
+			{{recipe.cook_time}} min
+			  </span>
+			</div>
 
-	    <div class="col">
-	      <span ng-repeat="item in recipe.flags">
-		<span ng-show="item.checked" class="view-flag">
-		  <i class="icon ion-plus-round"></i>
-		  {{item.text}}
-		  <br/>
-		</span>
-	      </span>
-	    </div>
+			<div class="col">
+			  <span ng-repeat="item in recipe.flags">
+			<span ng-show="item.checked" class="view-flag">
+			  <i class="icon ion-plus-round"></i>
+			  {{item.text}}
+			  <br/>
+			</span>
+			  </span>
+		</div>
 	    
-	  </div>
 	 
-	  
+	 
+	  </div>
 	</div>
       </div>
  
       <!-- list of ingredients -->
       <div class="list card">
-
+	  <div class="row item">
+			<div class="col col-center">Ingredients: </div>
+			<div class="row right">
+			<ion-item> 
+				<ion-input>4</ion-input> 
+			</ion-item>
+			<div class="col col-center">Persons</div>
+			</div>
+		</div>
           <div class="row item view-ingredient" ng-repeat="item in recipe.ingredients">
 	    <div class="col">
 	      {{item.ingredient}}
@@ -67,7 +94,9 @@
 
       <!-- list of directions -->
       <div class="list card">
-
+		<div class="row item">
+			<div>Directions:</div>
+		</div>
           <div class="row item view-direction" ng-repeat="item in recipe.directions">
 	    <div class="col">
 	      {{$index+1}}.
