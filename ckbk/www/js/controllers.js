@@ -1,56 +1,72 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+    .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+	$scope.recipeList = [];
+    })
 
-  // Form data for the login modal
-  $scope.loginData = {};
+    .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $ionicPlatform, $ionicActionSheet, $ionicPopup){
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+	$scope.loadRecipes = function(){
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
+	    //create test data for now, use database later on
+	    var currRecipe = {};
+	    currRecipe.id = 1;
+	    currRecipe.name = "Lasagna";
+	    currRecipe.category =  "Lunch";
+	    currRecipe.prep_time = 30;
+	    currRecipe.cook_time = 60;
+	    
+	    currRecipe.flags =  [
+		{ text: "Vegan", checked: true },
+		{ text: "Vegetarian", checked: false },
+		{ text: "Glutenfree", checked: false }
+	    ];
+	    
+	    currRecipe.ingredients =  [
+		{ingredient: "Beef", amount: "500g"}
+	    ];
+	    
+	    currRecipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
 
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
+	    $scope.recipeList.push(currRecipe);
+	};
 
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
+	$scope.showOverflowMenu = function(currRecipe) {
+	    console.log("long pressed: " + currRecipe.name);
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-})
+	    //show overflow menu
+	    $ionicActionSheet.show({
+		titleText: currRecipe.name,
+		buttons: [
+		    { text: 'Edit <i class="icon ion-edit"></i>'}
+		],
+		destructiveText: 'Delete <i class="icon ion-trash-a"></i>',
+		cancelText: 'Cancel',
+		cancel: function() {
+		    console.log('CANCELLED');
+		},
+		buttonClicked: function(index) {
+		    console.log('BUTTON CLICKED', index);
+		    switch(index){
+		    case 0:
+			//edit
+			console.log("edit pressed, id: " + currRecipe.id);
+			window.location.href='#/app/recipes/' + currRecipe.id;
+			break;
+		    }
+		    return true;
+		},
+		destructiveButtonClicked: function() {
+		    $scope.confirmDeletion(currRecipe);
+		    return true;
+		}
+	    });
+ 	}
+	
+	$ionicPlatform.ready(function() {
+	    console.log("platform ready");
+	    $scope.loadRecipes();
+	});
+    });
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
