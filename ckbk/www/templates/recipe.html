@@ -43,7 +43,7 @@
       
       <div class="list card">
 	<!-- category field -->
-	<label class="item item-input item-select">
+	<label class="item item-input item-select row">
 	  <div class="input-label">
 	    Category
 	  </div>
@@ -57,20 +57,23 @@
 	</label>
 	
 	<!-- preparation time -->
-	<div class="item">
-	  <label class="item item-input">
-	    <span class="input-label">Preparation Time[min]</span>
-	    <input type="text" placeholder={{recipe.prep_time}}>
+	<div class="item row">
+	  <span class="col-90 col-center">Preparation Time [min]</span>
+	  
+	  <label class="col-10 item item-input">
+	    <input type="text" placeholder="{{recipe.prep_time}}">
 	  </label>
 	</div>
 	
 	<!-- cooking time -->
-	<div class="item">
-	  <label class="item item-input">
-	    <span class="input-label">Cooking Time[min]</span>
-	    <input type="text" placeholder={{recipe.cook_time}}>
+	<div class="item row">
+	  <span class="col-90 col-center">Cooking Time [min]</span>
+	  
+	  <label class="col-10 item item-input">
+	    <input type="text" placeholder="{{recipe.cook_time}}">
 	  </label>
 	</div>
+	
 	<div class="item">
           <ion-checkbox ng-repeat="item in recipe.flags"
 			ng-model="item.checked" 
