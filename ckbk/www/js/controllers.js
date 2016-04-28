@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ionic', 'ngCordova'])
+angular.module('starter.controllers', ['ionic', 'ngCordova','pica'])
 
 
     .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -28,8 +28,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    ];
 	    
 	    currRecipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
-		
-		currRecipe.imageSource = [{text:"http://tutorialsplane.com/runtest/ionic/img/cover.jpg"}];
+	    
+	    currRecipe.imageSource = [{text:"https://c2.staticflickr.com/6/5131/5413268570_f85d9fd78d_b.jpg"}];
 
 	    $scope.recipeList.push(currRecipe);
 	};
@@ -102,7 +102,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    ];
 	    
 	    $scope.recipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
-		$scope.recipe.imageSource = "http://tutorialsplane.com/runtest/ionic/img/cover.jpg";
+	    $scope.recipe.imageSource = "https://c2.staticflickr.com/6/5131/5413268570_f85d9fd78d_b.jpg";
 	    // $scope.recipe.ingredients = [
 	    // 	{ingredient: "", amount: ""}
 	    // ];
@@ -112,8 +112,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
 	//call the load recipe method, when controller is started
 	$scope.loadRecipe();
-
-		$scope.addIngredientField = function() {
+	
+	$scope.addIngredientField = function() {
 	    $scope.recipe.ingredients.push({ingredient:"",amount:""});
 	    $scope.$apply();
 	}
@@ -123,9 +123,20 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.$apply();
 	}
 
+	$scope.loadPhoto = function(){
+	    //TODO
+	}
+
 	$scope.saveRecipe = function(){
 	    //save recipe, then go to browse state
 	    $state.go('app.browse');
 	}
+
+	//when the view is ready, load the picture
+	$ionicPlatform.ready(function() {
+	    console.log("platform ready");
+	    $scope.loadPhoto();
+	});
+
     });
 
