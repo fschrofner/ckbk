@@ -26,7 +26,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    currRecipe.persons = 4;
 	    
 	    currRecipe.ingredients =  [
-		{ingredient: "Beef", amount: "500g"}
+		{ingredient: "Beef", amount: "500", unit: "g"}
 	    ];
 	    
 	    currRecipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
@@ -102,7 +102,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.recipe.persons = 4;
 
 	    $scope.recipe.ingredients =  [
-		{ingredient: "Beef", amount: "500g"}
+		{ingredient: "Beef", amount: "500", unit: "g"}
 	    ];
 	    
 	    $scope.recipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];

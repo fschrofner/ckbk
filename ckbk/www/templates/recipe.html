@@ -83,8 +83,9 @@
 
       <!-- list of ingredients -->
       <div class="list card">
+	
 	<div class="row item">
-	  <div class="col col-center">Ingredients: </div>
+	  <div class="col col-center">Ingredients: </div> 
 	  <div class="col right">
 	    <div class="edit-persons">
 	      <label class="item item-input">
@@ -94,40 +95,43 @@
 	    </div>
 	  </div>
 	</div>
-        <div class="row item view-ingredient" ng-repeat="item in recipe.ingredients">
-	  <div class="col">
+	
+        <div class="row item edit-ingredient" ng-repeat="item in recipe.ingredients">
+	  <div class="col-25 col-center">
 	    <input type="text" placeholder="Ingredient">
 	  </div>
-	  <div class="col">
+	  <div class="col-25 col-center edit-ingredient-amount">
 	    <input type="text" placeholder="Amount">
 	  </div>
-	  <div class="col">
-	    <select ng-model="amount.category">
-	      <option>g</option>
-	      <option>kg</option>
-	      <option>ml</option>
-	      <option>l</option>
-	      <option>pckg</option>
-	      <option>pc</option>					
-	    </select>
+	  <div class="col col-center">
+	    <label class="edit-ingredient-unit item item-input item-select">
+	      <select ng-model="item.unit">
+		<option>g</option>
+		<option>kg</option>
+		<option>ml</option>
+		<option>l</option>
+		<option>pckg</option>
+		<option>pc</option>
+	      </select>
+	    </label>
 	  </div>
-	  <div class="col">
-	    <button class="button button-icon ion-android-close" id="remove-ingredient-button" ng-click="removeIngredient()">
+	  <div class="remove-button col-10 col-center right">
+	    <button class="button button-icon ion-android-close" id="remove-ingredient-button" ng-click="removeIngredientField()">
 	    </button>
 	  </div>
         </div>    
-      <!-- add new ingredient button -->
-      <button class="add-ingredient-button icon ion-plus-round" ng-click="addIngredientField()">
-      </button>
-</div>
+	<!-- add new ingredient button -->
+	<button class="add-ingredient-button icon ion-plus-round" ng-click="addIngredientField()">
+	</button>
+      </div>
 
 <!-- list of directions -->
 <div class="list card">
   <div class="row item view-directions" ng-repeat="item in recipe.directions">
-    <div class="col">
+    <div class="col-90">
       <input type="text" placeholder="Direction">
     </div>
-    <div class="col">
+    <div class="col-10 remove-button">
       <button class="button button-icon ion-android-close" id="remove-direction-button" ng-click="removeDirection()">
       </button>
     </div>

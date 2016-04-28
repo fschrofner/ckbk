@@ -10012,6 +10012,16 @@ body {
     font-size: medium;
     text-align: left;
     padding-left: 20px; }
+  body edit-ingredient {
+    width: 100%;
+    font-family: OpenSansRegular;
+    font-size: medium;
+    text-align: left;
+    padding-left: 20px; }
+    body edit-ingredient .remove-button {
+      text-align: right; }
+    body edit-ingredient .edit-ingredient-unit {
+      padding: 0px; }
   body .edit-time-label {
     font-family: OpenSansLight;
     font-size: smaller; }

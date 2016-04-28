@@ -189,6 +189,22 @@ body {
 	padding-left: 20px;
     }
 
+    edit-ingredient {
+	width: 100%;
+	font-family: OpenSansRegular;
+	font-size: medium;
+	text-align: left;
+	padding-left: 20px;
+	
+	.remove-button{
+	    text-align: right;
+	}
+
+	.edit-ingredient-unit{
+	    padding: 0px;
+	}
+    }
+
     .edit-time-label{
 	font-family: OpenSansLight;
 	font-size: smaller;
