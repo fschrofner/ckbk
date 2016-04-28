@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    
 	    currRecipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
 		
-		currRecipe.imageSource = [{text:"http://tutorialsplane.com/runtest/ionic/img/cover.jpg"}];
+		currRecipe.imageSource = "http://tutorialsplane.com/runtest/ionic/img/cover.jpg";
 
 	    $scope.recipeList.push(currRecipe);
 	};
@@ -131,5 +131,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    //save recipe, then go to browse state
 	    $state.go('app.browse');
 	}
-    });
+	$scope.toShow=true;
+	
+});
 
