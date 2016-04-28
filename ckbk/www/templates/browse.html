@@ -7,28 +7,36 @@
     <div ng-repeat="currRecipe in recipeList">
 
       <div class="list card" on-hold="showOverflowMenu(currRecipe)" on-tap="showRecipe(currRecipe)">
-	
 	<div class="item browse-recipe-title">
 	  {{currRecipe.name}}
 	</div>
 
-	<div class="browse-recipe-data">
-	  <a class="icon ion-folder browse-recipe-icon"></a> {{currRecipe.category}} <br>
+	<div class="row">
+	  <div class="col-50 browse-recipe-data">
+	    <a class="icon ion-folder browse-recipe-icon"></a> {{currRecipe.category}} <br>
 
-	  <a class="icon ion-clock browse-recipe-icon"></a> {{+currRecipe.prep_time + +currRecipe.cook_time}} min <br>
+	    <a class="icon ion-clock browse-recipe-icon"></a> {{+currRecipe.prep_time + +currRecipe.cook_time}} min <br>
 
-	  <!-- check flags  and print the checked ones -->
-	  <span ng-repeat="flag in currRecipe.flags">
-	    <span ng-if="flag.checked">
-	      <span ng-if="flag.text == 'Vegetarian' || flag.text =='Vegan'">
-		<a class="icon ion-leaf browse-recipe-icon"></a>
-	      </span>
-	      <span ng-if="flag.text == 'Glutenfree'">
-		<a class="icon ion-ios-nutrition browse-recipe-icon"></a>
-	      </span>
-	    </span>	  
-	  </span>
+	    <!-- check flags  and print the checked ones -->
+	    <span ng-repeat="flag in currRecipe.flags">
+	      <span ng-if="flag.checked">
+		<span ng-if="flag.text == 'Vegetarian' || flag.text =='Vegan'">
+		  <a class="icon ion-leaf browse-recipe-icon"></a>
+		</span>
+		<span ng-if="flag.text == 'Glutenfree'">
+		  <a class="icon ion-ios-nutrition browse-recipe-icon"></a>
+		</span>
+	      </span>	  
+	    </span>
+	  </div>
+	  
+	  <div class="col-50 browse-recipe-photo">
+	    <img  ng-src="{{currRecipe.imageSource}}"
+		  class="browse-recipe-photo"/>	  
+	  </div>
+	  
 	</div>
+	
 	
 	<!-- <span ng-repeat="ingredient in currRecipe.ingredients"> -->
 	<!--   {{ingredient.name}} -->
@@ -36,6 +44,6 @@
 
       </div>
     </div>
-     
+    
   </ion-content>
 </ion-view>

@@ -9976,6 +9976,9 @@ body {
     font-weight: bold; }
   body .browse-recipe-icon {
     color: black; }
+  body .browse-recipe-photo {
+    max-height: 100%;
+    max-width: 100%; }
   body .view-name {
     text-align: center;
     color: #fff;
@@ -9987,15 +9990,25 @@ body {
     background-color: green;
     width: 100%;
     height: 300px; }
+  body .view-headline {
+    font-family: OpenSansRegular;
+    font-size: medium;
+    font-weight: bold; }
+  body .view-rating {
+    text-align: center; }
   body .view-category {
     font-family: OpenSansLight;
-    font-size: smaller; }
+    font-size: medium; }
   body .view-time {
     font-family: OpenSansLight;
-    font-size: smaller; }
+    font-size: medium; }
   body .view-flag {
     font-family: OpenSansLight;
-    font-size: smaller; }
+    font-size: medium; }
+  body .view-persons {
+    text-align: right;
+    width: 200px;
+    float: right; }
   body .view-ingredient {
     font-family: OpenSansRegular;
     font-size: medium;
@@ -10006,9 +10019,24 @@ body {
     font-size: medium;
     text-align: left;
     padding-left: 20px; }
+  body edit-ingredient {
+    width: 100%;
+    font-family: OpenSansRegular;
+    font-size: medium;
+    text-align: left;
+    padding-left: 20px; }
+    body edit-ingredient .remove-button {
+      text-align: right; }
+    body edit-ingredient .edit-ingredient-unit {
+      padding: 0px; }
   body .edit-time-label {
     font-family: OpenSansLight;
     font-size: smaller; }
+  body .edit-persons {
+    text-align: right;
+    width: 200px;
+    float: right;
+    font-family: OpenSansRegular; }
   body .browse-recipe-data {
     font-family: OpenSansRegular;
     font-size: medium;

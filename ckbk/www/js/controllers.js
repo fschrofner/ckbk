@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ionic', 'ngCordova','pica'])
+angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
 
     .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -22,14 +22,16 @@ angular.module('starter.controllers', ['ionic', 'ngCordova','pica'])
 		{ text: "Vegetarian", checked: false },
 		{ text: "Glutenfree", checked: false }
 	    ];
+
+	    currRecipe.persons = 4;
 	    
 	    currRecipe.ingredients =  [
-		{ingredient: "Beef", amount: "500g"}
+		{ingredient: "Beef", amount: "500", unit: "g"}
 	    ];
 	    
 	    currRecipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
 	    
-	    currRecipe.imageSource = [{text:"https://c2.staticflickr.com/6/5131/5413268570_f85d9fd78d_b.jpg"}];
+	    currRecipe.imageSource = "https://c2.staticflickr.com/6/5131/5413268570_f85d9fd78d_b.jpg";
 
 	    $scope.recipeList.push(currRecipe);
 	};
@@ -97,8 +99,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova','pica'])
 		{ text: "Glutenfree", checked: false }
 	    ];
 
+	    $scope.recipe.persons = 4;
+
 	    $scope.recipe.ingredients =  [
-		{ingredient: "Beef", amount: "500g"}
+		{ingredient: "Beef", amount: "500", unit: "g"}
 	    ];
 	    
 	    $scope.recipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];

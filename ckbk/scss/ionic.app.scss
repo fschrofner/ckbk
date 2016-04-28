@@ -134,6 +134,11 @@ body {
 	color: black;
     }
 
+    .browse-recipe-photo{
+	max-height: 100%;
+	max-width: 100%;
+    }
+
     .view-name{
 	@extend .item;
 	text-align: center;
@@ -150,21 +155,37 @@ body {
 	height: 300px;
     }
     
+    .view-headline{
+	font-family: OpenSansRegular;
+	font-size: medium;
+	font-weight: bold;
+    }
+    
+    .view-rating{
+	text-align: center;
+    }
+
     .view-category{
 	font-family: OpenSansLight;
-	font-size: smaller;
+	font-size: medium;
     }
     
     .view-time{
 	font-family: OpenSansLight;
-	font-size: smaller;
+	font-size: medium;
     }
 
     .view-flag{
 	font-family: OpenSansLight;
-	font-size: smaller;	
+	font-size: medium;	
     }
 
+    .view-persons{
+	text-align:right;
+	width: 200px;
+	float:right;
+    }
+    
     .view-ingredient{
 	font-family: OpenSansRegular;
 	font-size: medium;
@@ -179,9 +200,32 @@ body {
 	padding-left: 20px;
     }
 
+    edit-ingredient {
+	width: 100%;
+	font-family: OpenSansRegular;
+	font-size: medium;
+	text-align: left;
+	padding-left: 20px;
+	
+	.remove-button{
+	    text-align: right;
+	}
+
+	.edit-ingredient-unit{
+	    padding: 0px;
+	}
+    }
+
     .edit-time-label{
 	font-family: OpenSansLight;
 	font-size: smaller;
+    }
+
+    .edit-persons{
+	text-align:right;
+	width: 200px;
+	float:right;
+	font-family: OpenSansRegular;
     }
 
     .browse-recipe-data{
