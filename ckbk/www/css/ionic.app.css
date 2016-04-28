@@ -9934,12 +9934,12 @@ body [disabled].add-ingredient-button {
   font-family: OpenSansBold;
   src: url("/fonts/open-sans/OpenSans-Bold.ttf") format("opentype"); }
 
-.header, .header #menu-button, .header #create-button, .header #recipe-save-button, .header .button-clear {
+.header, .header #menu-button, .header #create-button, .header #recipe-save-button, .header #edit-button, .header .button-clear {
   font-family: OpenSansRegular;
   background-color: #ef473a;
   color: #fff;
   text-align: center; }
-  .header .button-clear, .header #menu-button .button-clear, .header #create-button .button-clear, .header #recipe-save-button .button-clear {
+  .header .button-clear, .header #menu-button .button-clear, .header #create-button .button-clear, .header #recipe-save-button .button-clear, .header #edit-button .button-clear {
     font-family: OpenSansLight; }
 
 .sidemenu, .sidemenu ion-header-bar h1, .sidemenu ion-content, .sidemenu ion-item, .sidemenu ion-list, .sidemenu .item-content, .sidemenu .item.activated, .sidemenu body .activated.add-ingredient-button, body .sidemenu .activated.add-ingredient-button, .sidemenu body .activated.view-name, body .sidemenu .activated.view-name, .sidemenu .item-content.activated {
@@ -9983,15 +9983,25 @@ body {
     font-family: OpenSansBold;
     font-size: bigger;
     font-weight: bold; }
+  body .view-headline {
+    font-family: OpenSansRegular;
+    font-size: medium;
+    font-weight: bold; }
+  body .view-rating {
+    text-align: center; }
   body .view-category {
     font-family: OpenSansLight;
-    font-size: smaller; }
+    font-size: medium; }
   body .view-time {
     font-family: OpenSansLight;
-    font-size: smaller; }
+    font-size: medium; }
   body .view-flag {
     font-family: OpenSansLight;
-    font-size: smaller; }
+    font-size: medium; }
+  body .view-persons {
+    text-align: right;
+    width: 200px;
+    float: right; }
   body .view-ingredient {
     font-family: OpenSansRegular;
     font-size: medium;
@@ -10005,6 +10015,11 @@ body {
   body .edit-time-label {
     font-family: OpenSansLight;
     font-size: smaller; }
+  body .edit-persons {
+    text-align: right;
+    width: 200px;
+    float: right;
+    font-family: OpenSansRegular; }
   body .browse-recipe-data {
     font-family: OpenSansRegular;
     font-size: medium;

@@ -22,6 +22,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 		{ text: "Vegetarian", checked: false },
 		{ text: "Glutenfree", checked: false }
 	    ];
+
+	    currRecipe.persons = 4;
 	    
 	    currRecipe.ingredients =  [
 		{ingredient: "Beef", amount: "500g"}
@@ -96,6 +98,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 		{ text: "Vegetarian", checked: true },
 		{ text: "Glutenfree", checked: false }
 	    ];
+
+	    $scope.recipe.persons = 4;
 
 	    $scope.recipe.ingredients =  [
 		{ingredient: "Beef", amount: "500g"}

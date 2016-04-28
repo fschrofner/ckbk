@@ -144,21 +144,37 @@ body {
 	font-weight: bold;
     }
 
+    .view-headline{
+	font-family: OpenSansRegular;
+	font-size: medium;
+	font-weight: bold;
+    }
+    
+    .view-rating{
+	text-align: center;
+    }
+
     .view-category{
 	font-family: OpenSansLight;
-	font-size: smaller;
+	font-size: medium;
     }
     
     .view-time{
 	font-family: OpenSansLight;
-	font-size: smaller;
+	font-size: medium;
     }
 
     .view-flag{
 	font-family: OpenSansLight;
-	font-size: smaller;	
+	font-size: medium;	
     }
 
+    .view-persons{
+	text-align:right;
+	width: 200px;
+	float:right;
+    }
+    
     .view-ingredient{
 	font-family: OpenSansRegular;
 	font-size: medium;
@@ -176,6 +192,13 @@ body {
     .edit-time-label{
 	font-family: OpenSansLight;
 	font-size: smaller;
+    }
+
+    .edit-persons{
+	text-align:right;
+	width: 200px;
+	float:right;
+	font-family: OpenSansRegular;
     }
 
     .browse-recipe-data{
