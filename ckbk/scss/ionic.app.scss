@@ -45,7 +45,7 @@ $sidemenu-background-color: #e54236;
 $sidemenu-font-color: #fff;
 $sidemenu-border-color: #cc3a30;
 
-$body-accent-color: $energized;
+$body-accent-color: #ffc900;
 $body-accent-font-color: $header-font-color;
 $body-accent-color-darker: #e6b500;
 
@@ -62,6 +62,17 @@ $body-accent-color-darker: #e6b500;
     .button-clear {
 	@extend .header;
 	font-family: OpenSansLight;
+    }
+
+    .bar-subheader{
+        @extend .bar-light;
+	    text-align: center;
+	    color: $body-accent-font-color;
+	    background-color: $body-accent-color;
+    }
+
+    .full-width {
+        width: 100%;
     }
 }
 

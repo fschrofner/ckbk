@@ -142,5 +142,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.loadPhoto();
 	});
 
-    });
+	$scope.toShow=true;
+	
+});
+
 
