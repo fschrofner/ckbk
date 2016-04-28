@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    
 	    currRecipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
 	    
-	    currRecipe.imageSource = "https://c2.staticflickr.com/6/5131/5413268570_f85d9fd78d_b.jpg";
+	    currRecipe.imageSource = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
 
 	    $scope.recipeList.push(currRecipe);
 	};
