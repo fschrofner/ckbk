@@ -18,7 +18,24 @@ $('#recipe-direction-text').css('overflow', 'hidden').autogrow([vertical: true, 
 	  <span class="input-label">Name</span>
 	  <input type="text" ng-model="recipe.name">
 	</label>
-
+	
+	<div class="item">
+	<div class="col col-center">
+		<div class="item item-image">
+			<img src={{recipe.imageSource}}>
+		</div>
+		
+		<div class="row">
+			<button class="button button-icon ion-android-star"></button>
+			<button class="button button-icon ion-android-star"></button>
+			<button class="button button-icon ion-android-star"></button>
+			<button class="button button-icon ion-android-star-half"></button>
+			<button class="button button-icon ion-android-star-outline"></button>
+		</div>
+	</div>
+	</div>
+	</div>
+	<div class="list card">
 	<!-- category field -->
 	<label class="item item-input item-select">
 	  <div class="input-label">
@@ -32,75 +49,82 @@ $('#recipe-direction-text').css('overflow', 'hidden').autogrow([vertical: true, 
 	    <option>Dinner</option>	
 	  </select>
 	</label>
-
+	
 	<!-- preparation time -->
 	<div class="item">
-	  <div class="edit-time-label">Preparation Time</div>
-	  <div class="range item-stacked-label range-energized">
-	    <i class="icon ion-clock"></i>
-	    <input type="range" name="volume" min="0" max="180" ng-model="recipe.prep_time">
-	    {{recipe.prep_time}} min.
-	  </div>
+	  <label class="item item-input">
+				<span class="input-label">Preparation Time[min]</span>
+				<input type="text" placeholder={{recipe.prep_time}}>
+			</label>
 	</div>
-
-
+	
 	<!-- cooking time -->
 	<div class="item">
-	  <div class="edit-time-label">Cook Time</div>
-	  <div class="range item-stacked-label range-energized">
-	    <i class="icon ion-clock"></i>
-	    <input type="range" name="volume" min="0" max="180" ng-model="recipe.cook_time">
-	    {{recipe.cook_time}} min.
-	  </div>
+			<label class="item item-input">
+				<span class="input-label">Cooking Time[min]</span>
+				<input type="text" placeholder={{recipe.cook_time}}>
+			</label>
 	</div>
-
-      </div>
-
-      <div class="list card">
+	<div class="item">
         <ion-checkbox ng-repeat="item in recipe.flags"
                       ng-model="item.checked" 
                       ng-checked="item.checked"
 		      class="checkbox-energized">
           {{ item.text }}
         </ion-checkbox>    
+		</div>
       </div>
 
-      <!-- list of ingredients -->
+<!-- list of ingredients -->
       <div class="list card">
-
-          <div class="row item" ng-repeat="item in recipe.ingredients">
-	    <div class="col">
-	      <label class="item item-input">
-		<input type="text" placeholder="Ingredient" ng-model="item.ingredient">
-	      </label>
-	    </div>
-	    <div class="col">
-	      <label class="item item-input">
-		<input type="text" placeholder="Amount" ng-model="item.amount">
-	      </label>	    
-	    </div>
-          </div>    
-
-	
-	<!-- add new ingredient button -->
-	<button class="add-ingredient-button icon ion-plus-round" ng-click="addIngredientField()">
-	</button>
-
+		<div class="row item">
+			<div class="col col-center">Ingredients: </div>
+			<div class="row right">
+			<ion-item> 
+				<ion-input>4</ion-input> 
+			</ion-item>
+			<div class="col col-center">Persons</div>
+			</div>
+		</div>
+        <div class="row item view-ingredient" ng-repeat="item in recipe.ingredients">
+			<div class="col">
+				<input type="text" placeholder="Ingredient">
+			</div>
+			<div class="col">
+				<input type="text" placeholder="Amount">
+			</div>
+			<div class="col">
+				<select ng-model="amount.category">
+					<option>g</option>
+					<option>kg</option>
+					<option>ml</option>
+					<option>l</option>
+					<option>pckg</option>
+					<option>pc</option>					
+				</select>
+			</div>
+			<div class="col">
+				<button class="button button-icon ion-android-close" id="remove-ingredient-button" ng-click="removeIngredient()">
+				</button>
+			</div>
+        </div>    
       </div>
+	<!-- add new ingredient button -->
+		<button class="add-ingredient-button icon ion-plus-round" ng-click="addIngredientField()">
+		</button>
+    </div>
 
       <!-- list of directions -->
       <div class="list card">
-
-          <div class="row item" ng-repeat="item in recipe.directions">
-	    <div class="col">
-	      <label class="item item-input">
-		<span class="input-label">{{$index+1}}.</span>
-		<!-- <input id="recipe-direction-text" type="text" placeholder="Directions" ng-model="item.text"> -->
-		<textarea id="recipe-direction-text" placeholder="Directions" ng-model="item.text"></textarea>
-	      </label>	    
-	    </div>
-          </div>    
-
+		<div class="row item view-directions" ng-repeat="item in recipe.directions">
+			<div class="col">
+				<input type="text" placeholder="Direction">
+			</div>
+			<div class="col">
+				<button class="button button-icon ion-android-close" id="remove-direction-button" ng-click="removeDirection()">
+				</button>
+			</div>
+        </div>    
 	
 	<!-- add new direction button -->
 	<button class="add-ingredient-button icon ion-plus-round" ng-click="addDirectionField()">
