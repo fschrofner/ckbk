@@ -49,6 +49,8 @@ $body-accent-color: #ffc900;
 $body-accent-font-color: $header-font-color;
 $body-accent-color-darker: #e6b500;
 
+$dropdown-menu-background-color: #f8f8f8;
+
 .header {
     font-family: OpenSansRegular;
     background-color: $header-color;
@@ -110,6 +112,49 @@ $body-accent-color-darker: #e6b500;
 
 body {
     font-family: OpenSansRegular;
+
+    #subheader-bar {
+	border-style: none;
+    }
+    
+    #search-bar {
+	border-style: solid;
+	border-width: 3px;
+	border-color: $body-accent-color;
+	width: 100%;
+	padding-left: 10px;	
+    }
+
+    #dropdown-filtermenu {
+	background-color: $dropdown-menu-background-color;
+	padding: 20px;
+    }
+
+    .animate-show {
+	line-height: 20px;
+	opacity: 1;
+	padding: 10px;
+	border: 1px solid black;
+	background: white;
+    }
+
+    .animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+	transition: all ease-in 0.6s;
+    }
+
+    .animate-show.ng-hide {
+	line-height: 0;
+	opacity: 0;
+	padding: 0 10px;
+    }
+
+    .check-element {
+	padding: 10px;
+	border: 1px solid black;
+	background: white;
+    }
+
+
     
     .add-ingredient-button {
 	@extend .item;

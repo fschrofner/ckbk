@@ -3,70 +3,57 @@
     <button class="button button-icon ion-android-add" id="create-button" onclick="window.location.href='#/app/recipes/'+ Date.now() + Math.floor((Math.random() * 100) + 1); ">
     </button>
   </ion-nav-buttons>
-  <ion-header-bar class="bar-light bar-subheader">
-	
-	<div class="row">
-	<div class="col">
-      <input type="text" placeholder="Search for Recipe" ng-model="search"
-             ng-focus="searchFocused = true"
-             ng-blur="searchFocused = false"
-             ng-change="scrollTop()"
-             class="full-width" width ="100%">
-			 </div>
-			 <div class="col">
-      <button ng-if="search.length"
-              class="button button-icon ion-android-close input-button"
-              ng-click="clearSearch()">
-			  
-      </button>
-	  </div>
-	</div>
-	
-	
+  
+  <ion-header-bar class="bar-light bar-subheader" id="subheader-bar"> 
+    <div class="row">
+      <div class="col">
+	<input type="text" placeholder="Search for Recipe" ng-model="search"
+               ng-focus="showDropdownFilterMenu = true"
+               ng-blur="showDropdownFilterMenu = false"
+               ng-change="scrollTop()"
+               id="search-bar"/>
+      </div>
+    </div>
   </ion-header-bar>
-	
-<ion-content>
 
-<ion-item class="item-divider positive" ng-init="toShow=true" ng-click="toShow = !toShow">
-
-<div ng-show="toShow">
-<div class="row">Category:</div>
-<div class="row">
+  <ion-content>
+    <div ng-show="showDropdownFilterMenu" id="dropdown-filtermenu" class="animate-show">
+      <div class="row">Category:</div>
+      <div class="row">
 	<div class="col">
           <ion-checkbox class="checkbox-energized">
             Baking
           </ion-checkbox>   
-			<ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized">
             Drinks
           </ion-checkbox> 
-			<ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized">
             Breakfast
           </ion-checkbox>   
 	</div>		 
 	<div class="col">
-		<ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized">
             Lunch
           </ion-checkbox> 
-		  <ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized">
             Dinner
           </ion-checkbox> 
 	</div>
-</div>
-<div class="row">Flags:</div>
-<div class="row">
-          <ion-checkbox class="checkbox-energized">
-            Vegetarian
-          </ion-checkbox>   
-			<ion-checkbox class="checkbox-energized">
-            Vegan
-          </ion-checkbox> 
-			<ion-checkbox class="checkbox-energized">
-            Glutenfree
-          </ion-checkbox>   	
-</div>
-</div>
-</ion-item>
-  
+      </div>
+      <div class="row">Flags:</div>
+      <div class="row">
+	<ion-checkbox class="checkbox-energized">
+          Vegetarian
+	</ion-checkbox>   
+	<ion-checkbox class="checkbox-energized">
+          Vegan
+	</ion-checkbox> 
+	<ion-checkbox class="checkbox-energized">
+          Glutenfree
+	</ion-checkbox>   	
+      </div>
+    </div>
+
     <div ng-repeat="currRecipe in recipeList">
 
       <div class="list card" on-hold="showOverflowMenu(currRecipe)" on-tap="showRecipe(currRecipe)">
