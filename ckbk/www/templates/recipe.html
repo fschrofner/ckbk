@@ -119,7 +119,7 @@
 	    </label>
 	  </div>
 	  <div class="remove-button col-10 col-center right">
-	    <button class="button button-icon ion-android-close" id="remove-ingredient-button" ng-click="removeIngredientField()">
+	    <button class="button button-icon ion-android-close" id="remove-ingredient-button" ng-click="removeIngredientField($index)">
 	    </button>
 	  </div>
         </div>    
@@ -135,7 +135,7 @@
       <input type="text" placeholder="Direction">
     </div>
     <div class="col-10 remove-button">
-      <button class="button button-icon ion-android-close" id="remove-direction-button" ng-click="removeDirection()">
+      <button class="button button-icon ion-android-close" id="remove-direction-button" ng-click="removeDirectionField($index)">
       </button>
     </div>
   </div>    

@@ -122,11 +122,21 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.$apply();
 	}
 
+	$scope.removeIngredientField = function(_index){
+	    $scope.recipe.ingredients.splice(_index, 1);
+	    $scope.apply();
+	}
+
 	$scope.addDirectionField = function() {
 	    $scope.recipe.directions.push({text:""});
 	    $scope.$apply();
 	}
 
+	$scope.removeDirectionField = function(_index){
+	    $scope.recipe.directions.splice(_index, 1);
+	    $scope.apply();
+	}
+	
 	$scope.loadPhoto = function(){
 	    //TODO
 	}
