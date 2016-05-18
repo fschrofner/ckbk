@@ -1,6 +1,6 @@
 <ion-view view-title="Recipe">
   <ion-nav-buttons side="secondary">
-    <button class="button button-icon ion-edit" id="edit-button" onclick="window.location.href='#/app/recipes/'+ Date.now() + Math.floor((Math.random() * 100) + 1); ">
+    <button class="button button-icon ion-edit" id="edit-button" ng-click="editRecipe({{recipe.id}})">
     </button>
   </ion-nav-buttons>
   <ion-content>

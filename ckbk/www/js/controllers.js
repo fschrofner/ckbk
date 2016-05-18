@@ -109,11 +109,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	}
     })
 
-    .controller('RecipeCtrl', function($scope, $stateParams, $state, $cordovaSQLite, databaseService, $ionicPopup, $ionicPlatform, $ionicHistory) {
+    .controller('RecipeCtrl', function($scope, $location, $stateParams, $state, $cordovaSQLite, databaseService, $ionicPopup, $ionicPlatform, $ionicHistory) {
 	$scope.recipe = {};
 	
 	$scope.loadRecipe = function(){
 	    var db = databaseService.getDatabase();
+	    console.log("loading recipe: " + $stateParams.recipeId)
 	    
 	    $cordovaSQLite.execute(db, "SELECT * FROM recipes WHERE id=?", [$stateParams.recipeId])
 		.then(
@@ -144,7 +145,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			$scope.loadDefaultValues($stateParams.recipeId);
 		    }
 		);
-	} 
+	}
+
+	$scope.editRecipe = function(){
+	    window.location.href='#/app/recipes/' + $scope.recipe.id;
+	}
 
 	$scope.loadDefaultValues = function(_id){
 	    $scope.recipe.id = _id;
