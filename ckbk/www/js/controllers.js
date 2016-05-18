@@ -7,34 +7,40 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
     .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $ionicPlatform, $ionicActionSheet, $ionicPopup){
 
-	$scope.loadRecipes = function(){
+	$scope.loadRecipes = function() {
+	    var db = databaseService.getDatabase();
+	    $scope.recipeList.splice(0,$scope.recipeList.length);
+	    //$scope.recipeList.length = 0;
+	    
+	    $cordovaSQLite.execute(db, "SELECT * FROM recipes ORDER BY name")
+		.then(
+		    function(result){
+			console.log("number of recipes saved in database: " + result.rows.length);
+			if(result.rows.length > 0) {
+			    for(i=0;i<result.rows.length;i++){
+				var currRow = result.rows.item(i);
+				var currRecipe = {};
+				
+				currRecipe.id = currRow.id;
+				currRecipe.name = currRow.name;
+				currRecipe.category = currRow.category;
+				currRecipe.prep_time = currRow.prep_time;
+				currRecipe.cook_time = currRow.cook_time;
+				
+				currRecipe.flags = JSON.parse(currRow.flags);
+				currRecipe.ingredients = JSON.parse(currRow.ingredients);
+				currRecipe.directions = JSON.parse(currRow.directions);
 
-	    //create test data for now, use database later on
-	    var currRecipe = {};
-	    currRecipe.id = 1;
-	    currRecipe.name = "Lasagna";
-	    currRecipe.category =  "Lunch";
-	    currRecipe.prep_time = 30;
-	    currRecipe.cook_time = 60;
-	    
-	    currRecipe.flags =  [
-		{ text: "Vegan", checked: true },
-		{ text: "Vegetarian", checked: false },
-		{ text: "Glutenfree", checked: false }
-	    ];
+				$scope.recipeList.push(currRecipe);
+			    }
+			}
+			$scope.$apply();
+		    },
+		    function(error){
 
-	    currRecipe.persons = 4;
-	    
-	    currRecipe.ingredients =  [
-		{ingredient: "Beef", amount: "500", unit: "g"}
-	    ];
-	    
-	    currRecipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
-	    
-	    currRecipe.imageSource = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
-
-	    $scope.recipeList.push(currRecipe);
-	};
+		    }
+		);
+	}
 
 	$scope.showOverflowMenu = function(currRecipe) {
 	    console.log("long pressed: " + currRecipe.name);
@@ -76,42 +82,88 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	$scope.showRecipe = function(currRecipe){
 	    window.location.href='#/app/view/recipes/' + currRecipe.id;
 	}
+
+	$scope.confirmDeletion = function(currRecipe) {
+	    console.log('confirm deletion called');
+	    
+	    var confirmPopup = $ionicPopup.confirm({
+		title: 'Delete recipe?',
+		template: 'Are you sure you want to permanently delete this recipe?'
+	    });
+
+	    confirmPopup.then(function(res) {
+		if(res) {
+		    $scope.deleteRecipe(currRecipe);
+		} else {
+		    console.log('Cancelled');
+		}
+	    });
+	};
+
+	$scope.deleteRecipe = function(currRecipe){
+	    var db = databaseService.getDatabase()
+	    $cordovaSQLite.execute(db, "DELETE FROM recipes WHERE id=?", [currRecipe.id]).then(function(result){
+		$scope.loadRecipes();
+	    });
+	}
     })
 
     .controller('RecipeCtrl', function($scope, $stateParams, $state, $cordovaSQLite, databaseService, $ionicPopup, $ionicPlatform, $ionicHistory) {
 	$scope.recipe = {};
 	
 	$scope.loadRecipe = function(){
-	    //todo load real values here, when a real recipe is opened
-	    $scope.loadDefaultValues($stateParams.recipeId);
-	}
+	    var db = databaseService.getDatabase();
+	    
+	    $cordovaSQLite.execute(db, "SELECT * FROM recipes WHERE id=?", [$stateParams.recipeId])
+		.then(
+		    function(result){
+			if(result.rows.length > 0) {
+			    var currRow = result.rows.item(0);
+
+			    //create recipe object to work with
+			    $scope.recipe.id = currRow.id;
+			    $scope.recipe.name = currRow.name;
+			    $scope.recipe.category = currRow.category;
+			    $scope.recipe.prep_time = currRow.prep_time;
+			    $scope.recipe.cook_time = currRow.cook_time;
+			    
+			    $scope.recipe.flags = JSON.parse(currRow.flags);
+			    $scope.recipe.ingredients = JSON.parse(currRow.ingredients);
+			    $scope.recipe.directions = JSON.parse(currRow.directions);
+			    
+			} else {
+			    console.log("ELSE: recipe not found in database, loading default values");
+			    $scope.loadDefaultValues($stateParams.recipeId);
+			}
+		    },
+		    function(error){
+			console.log("ERROR: recipe not found in database, loading default values");
+			$scope.loadDefaultValues($stateParams.recipeId);
+		    }
+		);
+	} 
 
 	$scope.loadDefaultValues = function(_id){
 	    $scope.recipe.id = _id;
-	    $scope.recipe.name = "Lasagna";
+	    $scope.recipe.name = "";
 	    $scope.recipe.category = "Lunch";
-	    $scope.recipe.prep_time = 30;
-	    $scope.recipe.cook_time = 60;
+	    $scope.recipe.prep_time = 0;
+	    $scope.recipe.cook_time = 0;
 	    
 	    $scope.recipe.flags = [
-		{ text: "Vegan", checked: true },
-		{ text: "Vegetarian", checked: true },
+		{ text: "Vegan", checked: false },
+		{ text: "Vegetarian", checked: false },
 		{ text: "Glutenfree", checked: false }
 	    ];
 
 	    $scope.recipe.persons = 4;
 
 	    $scope.recipe.ingredients =  [
-		{ingredient: "Beef", amount: "500", unit: "g"}
+		{ingredient: "", amount: "", unit: "g"}
 	    ];
 	    
-	    $scope.recipe.directions = [{text:"Put beef in there! Hell yeah this is going to be vegan!"}];
-	    $scope.recipe.imageSource = "https://c2.staticflickr.com/6/5131/5413268570_f85d9fd78d_b.jpg";
-	    // $scope.recipe.ingredients = [
-	    // 	{ingredient: "", amount: ""}
-	    // ];
-	    
-	    // $scope.recipe.directions = [{text:""}];
+	    $scope.recipe.directions = [{text:""}];
+	    $scope.recipe.imageSource = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
 	}
 
 	//call the load recipe method, when controller is started
@@ -143,16 +195,47 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
 	$scope.saveRecipe = function(){
 	    //save recipe, then go to browse state
+	    var recipe = angular.copy($scope.recipe);
+
+	    //remove old recipe from list
+	    for (var i = 0; i < $scope.recipeList.length; i++) {
+		if($scope.recipeList[i].id == recipe.id){
+		    $scope.recipeList.splice(i, 1);
+		}
+	    }
+	    
+	    $scope.recipeList.push(recipe)
+
+	    
+	    var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, flags, ingredients, directions) VALUES (?,?,?,?,?,?,?,?)";
+	    var recipeParameter = [recipe.id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, JSON.stringify(recipe.flags), JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions)];
+
+	    var db = databaseService.getDatabase()
+	    
+	    console.log("recipe name: " + recipe.name);
+	    
+	    if(db){
+		console.log("database not null");
+	    } else {
+		console.log("database null");
+	    }
+	    
+            $cordovaSQLite.execute(db, query, recipeParameter).then(function(res) {
+	    	console.log("INSERT ID -> " + res.insertId);
+            }, function (err) {
+	    	console.error(err);
+            });
+
 	    $state.go('app.browse');
 	}
 
 	//when the view is ready, load the picture
 	$ionicPlatform.ready(function() {
 	    console.log("platform ready");
-	    $scope.loadPhoto();
+	    //$scope.loadPhoto();
 	});
 
-	$scope.toShow=true;
+	//$scope.toShow=true;
 	
 });
 

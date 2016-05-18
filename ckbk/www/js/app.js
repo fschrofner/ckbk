@@ -100,7 +100,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
 		}
 	    })
 
-	    .state('app.editrecipe', {
+	    .state('app.single', {
 		url: '/recipes/:recipeId',
 		views: {
 		    'menuContent': {
