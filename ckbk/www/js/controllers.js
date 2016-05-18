@@ -28,6 +28,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 				currRecipe.cook_time = currRow.cook_time;
 				
 				currRecipe.flags = JSON.parse(currRow.flags);
+				currRecipe.persons = currRow.persons;
 				currRecipe.ingredients = JSON.parse(currRow.ingredients);
 				currRecipe.directions = JSON.parse(currRow.directions);
 
@@ -128,8 +129,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			    $scope.recipe.cook_time = currRow.cook_time;
 			    
 			    $scope.recipe.flags = JSON.parse(currRow.flags);
+			    $scope.recipe.persons = currRow.persons;			    
 			    $scope.recipe.ingredients = JSON.parse(currRow.ingredients);
 			    $scope.recipe.directions = JSON.parse(currRow.directions);
+			    $scope.recipe.image_source = currRow.image_source;
 			    
 			} else {
 			    console.log("ELSE: recipe not found in database, loading default values");
@@ -163,14 +166,14 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    ];
 	    
 	    $scope.recipe.directions = [{text:""}];
-	    $scope.recipe.imageSource = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
+	    $scope.recipe.image_source = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
 	}
 
 	//call the load recipe method, when controller is started
 	$scope.loadRecipe();
 	
 	$scope.addIngredientField = function() {
-	    $scope.recipe.ingredients.push({ingredient:"",amount:""});
+	    $scope.recipe.ingredients.push({ingredient:"",amount:"", unit:"g"});
 	    $scope.$apply();
 	}
 
@@ -207,8 +210,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.recipeList.push(recipe)
 
 	    
-	    var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, flags, ingredients, directions) VALUES (?,?,?,?,?,?,?,?)";
-	    var recipeParameter = [recipe.id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, JSON.stringify(recipe.flags), JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions)];
+	    var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, flags, persons, ingredients, directions, image_source) VALUES (?,?,?,?,?,?,?,?,?,?)";
+	    var recipeParameter = [recipe.id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, JSON.stringify(recipe.flags), recipe.persons, JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions), recipe.image_source];
 
 	    var db = databaseService.getDatabase()
 	    

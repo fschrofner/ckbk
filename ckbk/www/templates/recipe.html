@@ -101,10 +101,10 @@
 	
         <div class="row item edit-ingredient" ng-repeat="item in recipe.ingredients">
 	  <div class="col-25 col-center">
-	    <input type="text" placeholder="Ingredient">
+	    <input type="text" placeholder="Ingredient" ng-model="item.ingredient">
 	  </div>
 	  <div class="col-25 col-center edit-ingredient-amount">
-	    <input type="text" placeholder="Amount">
+	    <input type="text" placeholder="Amount" ng-model="item.amount">
 	  </div>
 	  <div class="col col-center">
 	    <label class="edit-ingredient-unit item item-input item-select">
@@ -132,7 +132,7 @@
 <div class="list card">
   <div class="row item view-directions" ng-repeat="item in recipe.directions">
     <div class="col-90">
-      <input type="text" placeholder="Direction">
+      <input type="text" placeholder="Direction" ng-model="item.text">
     </div>
     <div class="col-10 remove-button">
       <button class="button button-icon ion-android-close" id="remove-direction-button" ng-click="removeDirectionField($index)">

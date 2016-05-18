@@ -40,4 +40,5 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <plugin name="cordova-sqlite-storage" spec="~0.7.14" />
+    <plugin name="ionic-plugin-keyboard" spec="~2.2.0" />
 </widget>
