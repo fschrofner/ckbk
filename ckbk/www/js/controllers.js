@@ -234,7 +234,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    	console.error(err);
             });
 
-	    $state.go('app.browse');
+	    $ionicHistory.clearCache().then(function(){ $state.go('app.browse') })
+	    //$scope.$apply();
 	}
 
 	//when the view is ready, load the picture
