@@ -43,7 +43,7 @@
       
       <div class="list card">
 	<!-- category field -->
-	<label class="item item-input item-select row">
+	<label class="item item-input item-select row edit-category">
 	  <div class="input-label">
 	    Category
 	  </div>
@@ -57,20 +57,20 @@
 	</label>
 	
 	<!-- preparation time -->
-	<div class="item row">
-	  <span class="col-90 col-center">Preparation Time [min]</span>
+	<div class="item row edit-prep-time">
+	  <span class="col-60 col-center">Preparation Time [min]</span>
 	  
-	  <label class="col-10 item item-input">
-	    <input type="text" placeholder="{{recipe.prep_time}}">
+	  <label class="col-40 col-center item item-input">
+	    <input class="edit-prep-time-input" type="number" ng-model="recipe.prep_time">
 	  </label>
 	</div>
 	
 	<!-- cooking time -->
-	<div class="item row">
-	  <span class="col-90 col-center">Cooking Time [min]</span>
+	<div class="item row edit-cook-time">
+	  <span class="col-60 col-center">Cooking Time [min]</span>
 	  
-	  <label class="col-10 item item-input">
-	    <input type="text" placeholder="{{recipe.cook_time}}">
+	  <label class="col-40 col-center item item-input">
+	    <input class="edit-cook-time-input" type="number" ng-model="recipe.cook_time">
 	  </label>
 	</div>
 	
@@ -87,9 +87,9 @@
       <!-- list of ingredients -->
       <div class="list card">
 	
-	<div class="row item">
-	  <div class="col col-center">Ingredients: </div> 
-	  <div class="col right">
+	<div class="row item edit-ingredients-header">
+	  <span class="col-50 col-center edit-ingredients-header-headline">Ingredients: </span> 
+	  <div class="col-50 col-right edit-ingredients-header-persons">
 	    <div class="edit-persons">
 	      <label class="item item-input">
 		<span class="input-label">Persons:</span>
@@ -103,7 +103,7 @@
 	  <div class="col-25 col-center">
 	    <input type="text" placeholder="Ingredient" ng-model="item.ingredient">
 	  </div>
-	  <div class="col-25 col-center edit-ingredient-amount">
+	  <div class="col-20 col-center edit-ingredient-amount">
 	    <input type="text" placeholder="Amount" ng-model="item.amount">
 	  </div>
 	  <div class="col col-center">
@@ -130,7 +130,7 @@
 
 <!-- list of directions -->
 <div class="list card">
-  <div class="row item view-directions" ng-repeat="item in recipe.directions">
+  <div class="row item edit-direction" ng-repeat="item in recipe.directions">
     <div class="col-90">
       <input type="text" placeholder="Direction" ng-model="item.text">
     </div>

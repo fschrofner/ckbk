@@ -50,6 +50,7 @@ $body-accent-font-color: $header-font-color;
 $body-accent-color-darker: #e6b500;
 
 $dropdown-menu-background-color: #f8f8f8;
+$left-padding: 20px;
 
 .header {
     font-family: OpenSansRegular;
@@ -246,28 +247,80 @@ body {
 	font-family: OpenSansRegular;
 	font-size: medium;
 	text-align: left;
-	padding-left: 20px;
+	padding-left: $left-padding;
     }
 
     .view-direction{
 	font-family: OpenSansRegular;
 	font-size: medium;
 	text-align: left;
-	padding-left: 20px;
+	padding-left: $left-padding;
     }
 
-    edit-ingredient {
+    .edit-prep-time{
 	width: 100%;
+	padding-left: $left-padding;
+	padding-right: 0px;
+
+	.edit-prep-time-input{
+	    width: 100%;
+	    text-align: right;
+	    padding-right: 0px;
+	}
+    }
+
+    .edit-category{
+	padding-left: $left-padding;
+    }
+    
+    .edit-cook-time{
+	width: 100%;
+	padding-left: $left-padding;
+	padding-right: 0px;
+
+	.edit-cook-time-input{
+	    width: 100%;
+	    text-align: right;
+	    padding-right: 0px;
+	}
+    }
+    
+    .edit-direction{
 	font-family: OpenSansRegular;
 	font-size: medium;
 	text-align: left;
-	padding-left: 20px;
+	padding-left: $left-padding;
+    }
+
+    .edit-ingredients-header{
+	width: 100%;
 	
-	.remove-button{
+	.edit-ingredients-header-headline{
+	    padding-left: $left-padding;
+	}
+
+	.edit-ingredients-header-persons{
 	    text-align: right;
 	}
 
+    }
+    
+    .edit-ingredient {
+	width: 100%;
+	height: auto;
+	font-family: OpenSansRegular;
+	font-size: medium;
+	text-align: left;
+	padding-left: $left-padding;
+	
+	.remove-button{
+	    text-align: right;
+	    color: yellow;
+	}
+
 	.edit-ingredient-unit{
+	    height: 50px;
+	    width: 100%;
 	    padding: 0px;
 	}
     }
@@ -289,7 +342,7 @@ body {
 	font-size: medium;
 	padding-top: 20px;
 	padding-bottom: 20px;
-	padding-left: 20px;
+	padding-left: $left-padding;
     }
 }
 

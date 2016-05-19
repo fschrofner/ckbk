@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	$scope.recipeList = [];
     })
 
-    .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $ionicPlatform, $ionicActionSheet, $ionicPopup){
+    .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $ionicPlatform, $ionicActionSheet, $ionicPopup, $ionicHistory){
 
 	$scope.loadRecipes = function() {
 	    var db = databaseService.getDatabase();
@@ -234,7 +234,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    	console.error(err);
             });
 
-	    $ionicHistory.clearCache().then(function(){ $state.go('app.browse') })
+	    $ionicHistory.nextViewOptions({
+		historyRoot: true
+	    })
+	    
+	    $ionicHistory.clearCache().then(function(){ $state.go('app.browse') });
 	    //$scope.$apply();
 	}
 
