@@ -173,6 +173,22 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.recipe.directions = [{text:""}];
 	    $scope.recipe.image_source = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
 	}
+	
+	$scope.decreasePersonCount =function() {
+		for(var i = 0; i < $scope.recipe.ingredients.length; i++) {
+			$scope.recipe.ingredients[i].amount=($scope.recipe.ingredients[i].amount/$scope.recipe.persons)*($scope.recipe.persons-1);	
+		}
+		$scope.recipe.persons=$scope.recipe.persons-1;
+	}
+	
+	$scope.increasePersonCount =function() {
+		for(var i = 0; i < $scope.recipe.ingredients.length; i++) {
+			$scope.recipe.ingredients[i].amount=($scope.recipe.ingredients[i].amount/$scope.recipe.persons)*($scope.recipe.persons+1);	
+		}
+		$scope.recipe.persons=$scope.recipe.persons+1;
+	}
+	
+
 
 	//call the load recipe method, when controller is started
 	$scope.loadRecipe();
