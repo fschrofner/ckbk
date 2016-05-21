@@ -6,6 +6,15 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     })
 
     .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $ionicPlatform, $ionicActionSheet, $ionicPopup, $ionicHistory){
+	$scope.filterFlags = {};
+
+	$scope.resetFilter = function() {
+	    $scope.filterFlags.baking = false;
+	    $scope.filterFlags.drinks = false;
+	    $scope.filterFlags.breakfast = false;
+	    $scope.filterFlags.lunch = false;
+	    $scope.filterFlags.dinner = false;
+	}
 	
 	$scope.loadRecipes = function() {
 	    var db = databaseService.getDatabase();
@@ -43,22 +52,20 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 		);
 	}
 	
-	$scope.lunchChecked;
-	$scope.bakingChecked;
-	$scope.drinksChecked;
-	$scope.breakfastChecked;
-	$scope.dinnerChecked;
-	
-	$scope.$watch('[lunchChecked,bakingChecked,drinksChecked,breakfastChecked,dinnerChecked]', function(){
-		console.log("Test - watch");
-	}, true );
+	// $scope.$watch('[lunchChecked,bakingChecked,drinksChecked,breakfastChecked,dinnerChecked]', function(){
+	// 	console.log("Test - watch");
+	// }, true );
 	
 	$scope.searchParametersChanged = function() {
-		var db = databaseService.getDatabase();
+	    var db = databaseService.getDatabase();
 	    $scope.recipeList.splice(0,$scope.recipeList.length);
 	    //$scope.recipeList.length = 0;
 		
-		console.log("Lunch Checked=" + $scope.lunchChecked);
+	    console.log("Baking: " + $scope.filterFlags.baking);
+	    console.log("Drinks: " + $scope.filterFlags.drinks);
+	    console.log("Breakfast: " + $scope.filterFlags.breakfast);
+	    console.log("Lunch: " + $scope.filterFlags.lunch);
+	    console.log("Dinner: " + $scope.filterFlags.dinner);
 	    
 	    $cordovaSQLite.execute(db, "SELECT * FROM recipes ORDER BY name")
 		.then(
@@ -125,6 +132,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	
 	$ionicPlatform.ready(function() {
 	    console.log("platform ready");
+	    $scope.resetFilter();
 	    $scope.loadRecipes();
 	});
 

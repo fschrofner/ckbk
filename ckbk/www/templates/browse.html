@@ -21,21 +21,21 @@
       <div class="row">Category:</div>
       <div class="row">
 	<div class="col">
-          <ion-checkbox class="checkbox-energized" ng-model="bakingChecked" ng-change="searchParametersChanged()">
+          <ion-checkbox class="checkbox-energized" ng-model="filterFlags.baking" ng-change="searchParametersChanged()">
             Baking
           </ion-checkbox>   
-	  <ion-checkbox class="checkbox-energized"  ng-model="drinksChecked" ng-change="searchParametersChanged()">
+	  <ion-checkbox class="checkbox-energized"  ng-model="filterFlags.drinks" ng-change="searchParametersChanged()">
             Drinks
           </ion-checkbox> 
-	  <ion-checkbox class="checkbox-energized" ng-model="breakfastChecked" ng-change="searchParametersChanged()">
+	  <ion-checkbox class="checkbox-energized" ng-model="filterFlags.breakfast" ng-change="searchParametersChanged()">
             Breakfast
           </ion-checkbox>   
 	</div>		 
 	<div class="col">
-	  <ion-checkbox class="checkbox-energized" ng-model="lunchChecked" ng-change="searchParametersChanged()">
+	  <ion-checkbox class="checkbox-energized" ng-model="filterFlags.lunch" ng-change="searchParametersChanged()">
             Lunch
           </ion-checkbox> 
-	  <ion-checkbox class="checkbox-energized" ng-model="dinnerChecked" ng-change="searchParametersChanged()">
+	  <ion-checkbox class="checkbox-energized" ng-model="filterFlags.dinner" ng-change="searchParametersChanged()">
             Dinner
           </ion-checkbox> 
 	</div>
