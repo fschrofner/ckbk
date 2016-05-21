@@ -21,34 +21,34 @@
       <div class="row">Category:</div>
       <div class="row">
 	<div class="col">
-          <ion-checkbox class="checkbox-energized">
+          <ion-checkbox class="checkbox-energized" ng-model="bakingChecked" ng-change="searchParametersChanged()">
             Baking
           </ion-checkbox>   
-	  <ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized"  ng-model="drinksChecked" ng-change="searchParametersChanged()">
             Drinks
           </ion-checkbox> 
-	  <ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized" ng-model="breakfastChecked" ng-change="searchParametersChanged()">
             Breakfast
           </ion-checkbox>   
 	</div>		 
 	<div class="col">
-	  <ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized" ng-model="lunchChecked" ng-change="searchParametersChanged()">
             Lunch
           </ion-checkbox> 
-	  <ion-checkbox class="checkbox-energized">
+	  <ion-checkbox class="checkbox-energized" ng-model="dinnerChecked" ng-change="searchParametersChanged()">
             Dinner
           </ion-checkbox> 
 	</div>
       </div>
       <div class="row">Flags:</div>
       <div class="row">
-	<ion-checkbox class="checkbox-energized">
+	<ion-checkbox class="checkbox-energized" ng-change="searchParametersChanged()">
           Vegetarian
 	</ion-checkbox>   
-	<ion-checkbox class="checkbox-energized">
+	<ion-checkbox class="checkbox-energized" ng-change="searchParametersChanged()">
           Vegan
 	</ion-checkbox> 
-	<ion-checkbox class="checkbox-energized">
+	<ion-checkbox class="checkbox-energized" ng-change="searchParametersChanged()">
           Glutenfree
 	</ion-checkbox>   	
       </div>

@@ -6,11 +6,59 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     })
 
     .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $ionicPlatform, $ionicActionSheet, $ionicPopup, $ionicHistory){
-
+	
 	$scope.loadRecipes = function() {
 	    var db = databaseService.getDatabase();
 	    $scope.recipeList.splice(0,$scope.recipeList.length);
 	    //$scope.recipeList.length = 0;
+	    
+	    $cordovaSQLite.execute(db, "SELECT * FROM recipes ORDER BY name")
+		.then(
+		    function(result){
+			console.log("number of recipes saved in database: " + result.rows.length);
+			if(result.rows.length > 0) {
+			    for(i=0;i<result.rows.length;i++){
+				var currRow = result.rows.item(i);
+				var currRecipe = {};
+				
+				currRecipe.id = currRow.id;
+				currRecipe.name = currRow.name;
+				currRecipe.category = currRow.category;
+				currRecipe.prep_time = currRow.prep_time;
+				currRecipe.cook_time = currRow.cook_time;
+				
+				currRecipe.flags = JSON.parse(currRow.flags);
+				currRecipe.persons = currRow.persons;
+				currRecipe.ingredients = JSON.parse(currRow.ingredients);
+				currRecipe.directions = JSON.parse(currRow.directions);
+
+				$scope.recipeList.push(currRecipe);
+			    }
+			}
+			$scope.$apply();
+		    },
+		    function(error){
+
+		    }
+		);
+	}
+	
+	$scope.lunchChecked;
+	$scope.bakingChecked;
+	$scope.drinksChecked;
+	$scope.breakfastChecked;
+	$scope.dinnerChecked;
+	
+	$scope.$watch('[lunchChecked,bakingChecked,drinksChecked,breakfastChecked,dinnerChecked]', function(){
+		console.log("Test - watch");
+	}, true );
+	
+	$scope.searchParametersChanged = function() {
+		var db = databaseService.getDatabase();
+	    $scope.recipeList.splice(0,$scope.recipeList.length);
+	    //$scope.recipeList.length = 0;
+		
+		console.log("Lunch Checked=" + $scope.lunchChecked);
 	    
 	    $cordovaSQLite.execute(db, "SELECT * FROM recipes ORDER BY name")
 		.then(
