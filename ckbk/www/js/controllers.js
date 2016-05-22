@@ -111,6 +111,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
     .controller('RecipeCtrl', function($scope, $location, $stateParams, $state, $cordovaSQLite, databaseService, $ionicPopup, $ionicPlatform, $ionicHistory) {
 	$scope.recipe = {};
+	$scope.photo = {};
 	
 	$scope.loadRecipe = function(){
 	    var db = databaseService.getDatabase();
@@ -133,7 +134,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			    $scope.recipe.persons = currRow.persons;			    
 			    $scope.recipe.ingredients = JSON.parse(currRow.ingredients);
 			    $scope.recipe.directions = JSON.parse(currRow.directions);
-			    $scope.recipe.image_source = currRow.image_source;
+			    $scope.recipe.image_larger = currRow.image_larger;
+			    $scope.recipe.image_smaller = currRow.image_smaller;
 			    
 			} else {
 			    console.log("ELSE: recipe not found in database, loading default values");
@@ -151,6 +153,73 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    window.location.href='#/app/recipes/' + $scope.recipe.id;
 	}
 
+
+	$scope.photoSelected = function(_files){
+	    var file = _files[0];
+	    console.log("selected photo: " + file);
+	    
+	    if (file.type.match(/image.*/)) {
+		console.log("file is an image");
+		
+		var reader = new FileReader();
+		reader.onload = function(e) {		   
+		    $scope.photoLoaded(e.target.result);
+		};
+		reader.readAsDataURL(file);
+		
+	    } else {
+		console.log("error: file not an image!");
+		//TODO: show error message
+	    }
+	}
+
+	$scope.photoLoaded = function(_dataurl){
+	    var img = document.createElement("img");
+	    img.src = _dataurl
+
+	    //preprocess
+	    var canvas = document.createElement("canvas");
+	    var ctx = canvas.getContext("2d");
+	    ctx.drawImage(img, 0, 0);
+
+	    //scale
+	    var MAX_WIDTH = 800;
+	    var MAX_HEIGHT = 600;
+	    var width = img.width;
+	    var height = img.height;
+	    
+	    if (width > height) {
+		if (width > MAX_WIDTH) {
+		    height *= MAX_WIDTH / width;
+		    width = MAX_WIDTH;
+		}
+	    } else {
+		if (height > MAX_HEIGHT) {
+		    width *= MAX_HEIGHT / height;
+		    height = MAX_HEIGHT;
+		}
+	    }
+
+	    
+	    canvas.width = width;
+	    canvas.height = height;
+
+	    console.log("calculated width: " + width);
+	    console.log("calculated height: " + height);
+	    
+	    ctx.drawImage(img, 0, 0, width, height);
+	    //ctx.createImageData(width, height);
+	    
+	    var dataurl = canvas.toDataURL("image/png");
+	    console.log("data url: " + dataurl);
+	    
+	    //TODO: save data on disk/into db
+	    //TODO: create smaller thumbnail
+	    $scope.recipe.image_larger = dataurl;
+	    $scope.recipe.image_smaller = dataurl;
+	    $scope.$apply();
+	}
+	
 	$scope.loadDefaultValues = function(_id){
 	    $scope.recipe.id = _id;
 	    $scope.recipe.name = "";
@@ -171,7 +240,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    ];
 	    
 	    $scope.recipe.directions = [{text:""}];
-	    $scope.recipe.image_source = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
+	    $scope.recipe.image_larger = "data:image/gif;base64,R0lGODlhAQABAIAAAP";
+	    $scope.recipe.image_smaller = "data:image/gif;base64,R0lGODlhAQABAIAAAP";
 	}
 
 	//call the load recipe method, when controller is started
@@ -215,8 +285,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.recipeList.push(recipe)
 
 	    
-	    var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, flags, persons, ingredients, directions, image_source) VALUES (?,?,?,?,?,?,?,?,?,?)";
-	    var recipeParameter = [recipe.id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, JSON.stringify(recipe.flags), recipe.persons, JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions), recipe.image_source];
+	    var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, flags, persons, ingredients, directions, image_larger, image_smaller) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	    var recipeParameter = [recipe.id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, JSON.stringify(recipe.flags), recipe.persons, JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions), recipe.image_larger, recipe.image_smaller];
 
 	    var db = databaseService.getDatabase()
 	    

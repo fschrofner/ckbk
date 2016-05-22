@@ -19,14 +19,28 @@
 	  <input type="text" ng-model="recipe.name">
 	</label>
 
+
 	<div class="item">
-	  <div class="col col-center">
-	    <div class="item item-image">
-	      <img src="{{recipe.imageSource}}"/>
+	  <div class="row">
+	    <div class="col col-center">
+	      <div class="item item-image">
+		<img id="recipe-photo-preview" data-ng-src="{{recipe.image_larger}}"/>
+	      </div>
 	    </div>
-	    
+	  </div>
+	  <div class="row">
+	    <div class="col col-center">
+	      <label class="item item-input">
+		<span class="input-label">File</span>
+		<input type="file" onchange="angular.element(this).scope().photoSelected(this.files)">
+	      </label>
+	    </div>
+	  </div>
+	</div>
+
+	  <div class="item">
 	    <div class="row">
-	      <div class="col">
+	      <div class="col col-center">
 		<div class="view-rating">
 		  <button class="button button-icon ion-android-star"></button>
 		  <button class="button button-icon ion-android-star"></button>
@@ -37,7 +51,6 @@
 	      </div>	      
 	    </div>
 	  </div>
-	</div>
 
       </div>
       
