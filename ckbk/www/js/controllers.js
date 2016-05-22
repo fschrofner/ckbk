@@ -14,6 +14,9 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.filterFlags.breakfast = false;
 	    $scope.filterFlags.lunch = false;
 	    $scope.filterFlags.dinner = false;
+		$scope.filterFlags.vegetarian=false;
+		$scope.filterFlags.vegan=false;
+		$scope.filterFlags.glutenfree=false;
 	}
 	
 	$scope.loadRecipes = function() {
@@ -51,51 +54,134 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 		    }
 		);
 	}
-	
-	// $scope.$watch('[lunchChecked,bakingChecked,drinksChecked,breakfastChecked,dinnerChecked]', function(){
-	// 	console.log("Test - watch");
-	// }, true );
-	
+
 	$scope.searchParametersChanged = function() {
 	    var db = databaseService.getDatabase();
 	    $scope.recipeList.splice(0,$scope.recipeList.length);
 	    //$scope.recipeList.length = 0;
 		
-	    console.log("Baking: " + $scope.filterFlags.baking);
-	    console.log("Drinks: " + $scope.filterFlags.drinks);
-	    console.log("Breakfast: " + $scope.filterFlags.breakfast);
-	    console.log("Lunch: " + $scope.filterFlags.lunch);
-	    console.log("Dinner: " + $scope.filterFlags.dinner);
+		var searchCategories = {};
+		var idx = 0;
+		
+		if ($scope.filterFlags.baking ==true) {
+			searchCategories[idx]="Baking";
+			idx++;
+		}
+		
+		if ($scope.filterFlags.drinks ==true) {
+			searchCategories[idx]="Drinks";
+			idx++;
+		}
+		
+		if ($scope.filterFlags.breakfast ==true) {
+			searchCategories[idx]="Breakfast";
+			idx++;
+		}
+		
+		if ($scope.filterFlags.lunch ==true) {
+			searchCategories[idx]="Lunch";
+			idx++;
+		}
+		
+		if ($scope.filterFlags.dinner ==true) {
+			searchCategories[idx]="Dinner";
+			idx++;
+		}
+		
+		var sqlStatement = "SELECT * FROM recipes WHERE "
+		
+		
+		if (idx>0) {
+		sqlStatement+= "category='" + searchCategories[0] + "'";
+		for(var i = 1; i < idx; i++) {
+				sqlStatement+=" OR category='" + searchCategories[i] + "'";
+		}
+		}
+		
+		sqlStatement += " ORDER BY name";
+		
 	    
-	    $cordovaSQLite.execute(db, "SELECT * FROM recipes ORDER BY name")
+		//nothing selected, show all
+		if ($scope.filterFlags.baking == false && $scope.filterFlags.drinks == false && $scope.filterFlags.breakfast == false && $scope.filterFlags.lunch == false && $scope.filterFlags.dinner == false) {
+			sqlStatement="SELECT * FROM recipes ORDER BY name";
+		}
+		
+		var searchFlags = {};
+		var flagIdx = 0;
+		if ($scope.filterFlags.vegan ==true) {
+			searchFlags[flagIdx]="Vegan";
+			flagIdx++;
+		}
+		if ($scope.filterFlags.vegetarian ==true) {
+			searchFlags[flagIdx]="Vegetarian";
+			flagIdx++;
+		}
+		if ($scope.filterFlags.glutenfree ==true) {
+			searchFlags[flagIdx]="Glutenfree";
+			flagIdx++;
+		}
+		
+	    $cordovaSQLite.execute(db, sqlStatement)
 		.then(
 		    function(result){
 			console.log("number of recipes saved in database: " + result.rows.length);
 			if(result.rows.length > 0) {
 			    for(i=0;i<result.rows.length;i++){
-				var currRow = result.rows.item(i);
-				var currRecipe = {};
 				
-				currRecipe.id = currRow.id;
-				currRecipe.name = currRow.name;
-				currRecipe.category = currRow.category;
-				currRecipe.prep_time = currRow.prep_time;
-				currRecipe.cook_time = currRow.cook_time;
-				
-				currRecipe.flags = JSON.parse(currRow.flags);
-				currRecipe.persons = currRow.persons;
-				currRecipe.ingredients = JSON.parse(currRow.ingredients);
-				currRecipe.directions = JSON.parse(currRow.directions);
-
-				$scope.recipeList.push(currRecipe);
-			    }
+					var currRow = result.rows.item(i);
+						
+					var currRecipe = {};
+					
+					currRecipe.id = currRow.id;
+					currRecipe.name = currRow.name;
+					currRecipe.category = currRow.category;
+					currRecipe.prep_time = currRow.prep_time;
+					currRecipe.cook_time = currRow.cook_time;
+					
+					currRecipe.flags = JSON.parse(currRow.flags);
+					currRecipe.persons = currRow.persons;
+					currRecipe.ingredients = JSON.parse(currRow.ingredients);
+					currRecipe.directions = JSON.parse(currRow.directions);
+					
+					
+					
+					if (($scope.filterFlags.vegan==false && $scope.filterFlags.vegetarian==false  && $scope.filterFlags.glutenfree==false) || checkRecipeForFlags(searchFlags, flagIdx, currRecipe.flags)==true)//none
+					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) || (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true) || (currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true)) ||  //either one of the three
+					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) && (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true)) ||  //vegan & vegetarian
+					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) && (currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true)) ||  //vegan & glutenfree
+					//((currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true) && (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true)) || //vegetarian & glutenfree
+					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) && (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true) && (currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true))) // all three
+					{ 
+						$scope.recipeList.push(currRecipe);
+					}				
+				}
+			
 			}
+						
 			$scope.$apply();
 		    },
 		    function(error){
 
 		    }
 		);
+	}
+	
+	checkRecipeForFlags = function(filterFlags, filterFlagsSize, recipeFlags){
+		console.log("Checked Flags Size = " + filterFlagsSize);
+		for(var i = 0; i < filterFlagsSize; i++) {
+			var flagFulfilled = false;
+			for(var j = 0; j < 3; j++){
+				console.log("filterFlag: " + filterFlags[i] );
+				console.log("RecipeFlag: " + recipeFlags[j].text + " : " +  recipeFlags[j].checked);
+				if(filterFlags[i] == recipeFlags[j].text && recipeFlags[j].checked==true){
+					flagFulfilled = true;
+				}
+			}
+			if(flagFulfilled == false){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	$scope.showOverflowMenu = function(currRecipe) {

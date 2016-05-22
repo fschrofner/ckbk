@@ -17,7 +17,7 @@
   </ion-header-bar>
 
   <ion-content>
-    <div ng-show="showDropdownFilterMenu" id="dropdown-filtermenu" class="animate-show">
+    <div ng-show="showDropdownFilterMenu" id="dropdown-filtermenu" class="animate-show" >
       <div class="row">Category:</div>
       <div class="row">
 	<div class="col">
@@ -42,13 +42,13 @@
       </div>
       <div class="row">Flags:</div>
       <div class="row">
-	<ion-checkbox class="checkbox-energized" ng-change="searchParametersChanged()">
+	<ion-checkbox class="checkbox-energized" ng-model="filterFlags.vegetarian" ng-change="searchParametersChanged()">
           Vegetarian
 	</ion-checkbox>   
-	<ion-checkbox class="checkbox-energized" ng-change="searchParametersChanged()">
+	<ion-checkbox class="checkbox-energized" ng-model="filterFlags.vegan" ng-change="searchParametersChanged()">
           Vegan
 	</ion-checkbox> 
-	<ion-checkbox class="checkbox-energized" ng-change="searchParametersChanged()">
+	<ion-checkbox class="checkbox-energized" ng-model="filterFlags.glutenfree" ng-change="searchParametersChanged()">
           Glutenfree
 	</ion-checkbox>   	
       </div>
