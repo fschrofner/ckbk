@@ -10,7 +10,7 @@
 	<input type="text" placeholder="Search for Recipe" ng-model="search"
                ng-focus="showDropdownFilterMenu = true"
                ng-blur="showDropdownFilterMenu = false"
-               ng-change="scrollTop()"
+               ng-change="searchParametersChanged()"
                id="search-bar"/>
       </div>
     </div>

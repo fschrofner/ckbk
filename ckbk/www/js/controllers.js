@@ -143,19 +143,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 					currRecipe.ingredients = JSON.parse(currRow.ingredients);
 					currRecipe.directions = JSON.parse(currRow.directions);
 					
-					
-					
-					if (($scope.filterFlags.vegan==false && $scope.filterFlags.vegetarian==false  && $scope.filterFlags.glutenfree==false) || checkRecipeForFlags(searchFlags, flagIdx, currRecipe.flags)==true)//none
-					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) || (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true) || (currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true)) ||  //either one of the three
-					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) && (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true)) ||  //vegan & vegetarian
-					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) && (currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true)) ||  //vegan & glutenfree
-					//((currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true) && (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true)) || //vegetarian & glutenfree
-					//((currRecipe.flags[0].checked==true && $scope.filterFlags.vegan==true) && (currRecipe.flags[1].checked==true && $scope.filterFlags.vegetarian==true) && (currRecipe.flags[2].checked==true && $scope.filterFlags.glutenfree==true))) // all three
-					{ 
+					if (checkRecipeForSearchText($scope.search, currRecipe.name) == true && (($scope.filterFlags.vegan==false && $scope.filterFlags.vegetarian==false  && $scope.filterFlags.glutenfree==false) || checkRecipeForFlags(searchFlags, flagIdx, currRecipe.flags)==true)) { 
 						$scope.recipeList.push(currRecipe);
 					}				
 				}
-			
 			}
 						
 			$scope.$apply();
@@ -164,6 +155,30 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
 		    }
 		);
+	}
+	
+	checkRecipeForSearchText = function(searchText, recipeName) {
+	
+		searchText = searchText.toLowerCase();
+		recipeName = recipeName.toLowerCase();
+		
+		var namesMatch = true;
+	
+		if (searchText.length<recipeName.length) {
+			for(var i = 0; i < searchText.length; i++) {
+				if (searchText[i] != recipeName[i]) {
+					namesMatch=false;
+				}	
+			}
+		} else {
+			for(var i = 0; i < recipeName.length; i++) {
+				if (searchText[i] != recipeName[i]) {
+					namesMatch=false;
+				}	
+			}
+		}
+		
+		return namesMatch;
 	}
 	
 	checkRecipeForFlags = function(filterFlags, filterFlagsSize, recipeFlags){
