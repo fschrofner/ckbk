@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	$scope.recipeList = [];
     })
 
-    .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $ionicPlatform, $ionicActionSheet, $ionicPopup, $ionicHistory){
+    .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $cordovaFile, $ionicPlatform, $ionicActionSheet, $ionicPopup, $ionicHistory){
 
 	$scope.loadRecipes = function() {
 	    var db = databaseService.getDatabase();
@@ -32,6 +32,9 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 				currRecipe.ingredients = JSON.parse(currRow.ingredients);
 				currRecipe.directions = JSON.parse(currRow.directions);
 
+				currRecipe.image_larger = currRow.image_larger;
+				currRecipe.image_smaller = currRow.image_smaller;
+				
 				$scope.recipeList.push(currRecipe);
 			    }
 			}
@@ -109,7 +112,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	}
     })
 
-    .controller('RecipeCtrl', function($scope, $location, $stateParams, $state, $cordovaSQLite, databaseService, $ionicPopup, $ionicPlatform, $ionicHistory) {
+    .controller('RecipeCtrl', function($scope, $location, $stateParams, $state, $cordovaSQLite, $cordovaFile, databaseService, $ionicPopup, $ionicLoading, $ionicPlatform, $ionicHistory) {
 	$scope.recipe = {};
 	$scope.photo = {};
 	
@@ -160,6 +163,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    
 	    if (file.type.match(/image.*/)) {
 		console.log("file is an image");
+		$scope.showLoadingAnimation(true);
 		
 		var reader = new FileReader();
 		reader.onload = function(e) {		   
@@ -173,6 +177,19 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    }
 	}
 
+	$scope.showLoadingAnimation = function(_show){
+	    //TODO: do nothing for now, it does seem to block some stuff
+	    return;
+	    if(_show){
+		console.log("show loading animation..");
+		// Show the loading overlay and text
+		$scope.loading = $ionicLoading.show();
+	    } else {
+		console.log("stop loading animation");
+		$ionicLoading.hide()
+	    }
+	}
+	
 	$scope.photoLoaded = function(_dataurl){
 	    var img = document.createElement("img");
 	    img.src = _dataurl
@@ -210,14 +227,99 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    ctx.drawImage(img, 0, 0, width, height);
 	    //ctx.createImageData(width, height);
 	    
-	    var dataurl = canvas.toDataURL("image/png");
-	    console.log("data url: " + dataurl);
+	    //var dataurl = canvas.toDataURL("image/png");
+	    //console.log("data url: " + dataurl);
 	    
 	    //TODO: save data on disk/into db
 	    //TODO: create smaller thumbnail
-	    $scope.recipe.image_larger = dataurl;
-	    $scope.recipe.image_smaller = dataurl;
-	    $scope.$apply();
+	    
+	    $scope.deleteCurrentPhotos();
+
+	    // write to file system
+	    var currentTime = Date.now();
+	    canvas.toBlob(function(_blob){
+		$scope.saveToFile(currentTime + ".png", _blob, false);
+	    });
+
+	    //create thumbnail
+	    MAX_WIDTH = 200;
+	    MAX_HEIGHT = 150;
+	    var width = img.width;
+	    var height = img.height;
+	    
+	    if (width > height) {
+		if (width > MAX_WIDTH) {
+		    height *= MAX_WIDTH / width;
+		    width = MAX_WIDTH;
+		}
+	    } else {
+		if (height > MAX_HEIGHT) {
+		    width *= MAX_HEIGHT / height;
+		    height = MAX_HEIGHT;
+		}
+	    }
+
+	    
+	    canvas.width = width;
+	    canvas.height = height;
+
+	    console.log("calculated thumb width: " + width);
+	    console.log("calculated thumb height: " + height);
+	    
+	    ctx.drawImage(img, 0, 0, width, height);
+
+	    canvas.toBlob(function(_blob){
+		$scope.saveToFile(currentTime + "_thumb.png", _blob, true);
+	    });
+	}
+
+	$scope.saveToFile = function(_filename, _blob, _thumb){
+	    $cordovaFile.writeFile(cordova.file.applicationStorageDirectory, _filename, _blob, true)
+		.then(function (success) {
+		    // success
+		    console.log("file write success");
+		    if(_thumb){
+			$scope.recipe.image_smaller = cordova.file.applicationStorageDirectory + _filename;
+			console.log("thumbnail saved: " + $scope.recipe.image_smaller);
+			$scope.showLoadingAnimation(false);
+		    } else {
+			$scope.recipe.image_larger = cordova.file.applicationStorageDirectory + _filename;
+			console.log("larger image saved: " + $scope.recipe.image_larger);
+		    }
+		    
+		    $scope.$apply();
+		}, function (error) {
+		    // error
+		    console.log("file write error");
+		});
+	}
+
+	$scope.deleteCurrentPhotos = function(){
+	    if($scope.recipe.image_larger != null && $scope.recipe.image_larger != ""){
+		var filename = $scope.recipe.image_larger.replace(/^.*[\\\/]/, '');
+		if($cordovaFile.checkFile(cordova.file.applicationStorageDirectory, filename)){
+		    $cordovaFile.removeFile(cordova.file.applicationStorageDirectory, filename).
+		    then(function(success){
+			console.log("file delete success");
+		    }, function(error){
+			console.log("file delete error");
+		    });
+		}
+		$scope.recipe.image_larger = "";
+	    }
+
+	    if($scope.recipe.image_smaller != null && $scope.recipe.image_smaller != ""){
+		var filename = $scope.recipe.image_smaller.replace(/^.*[\\\/]/, '');
+		if($cordovaFile.checkFile(cordova.file.applicationStorageDirectory, filename)){
+		    $cordovaFile.removeFile(cordova.file.applicationStorageDirectory, filename).
+		    then(function(success){
+			console.log("file delete success");
+		    }, function(error){
+			console.log("file delete error");
+		    });
+		}
+		$scope.recipe.image_smaller = "";
+	    }
 	}
 	
 	$scope.loadDefaultValues = function(_id){
@@ -240,8 +342,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    ];
 	    
 	    $scope.recipe.directions = [{text:""}];
-	    $scope.recipe.image_larger = "data:image/gif;base64,R0lGODlhAQABAIAAAP";
-	    $scope.recipe.image_smaller = "data:image/gif;base64,R0lGODlhAQABAIAAAP";
+	    $scope.recipe.image_larger = "";
+	    $scope.recipe.image_smaller = "";
 	}
 
 	//call the load recipe method, when controller is started
