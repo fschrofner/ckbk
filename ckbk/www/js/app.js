@@ -39,7 +39,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
 		    console.log("database is not null!");
 		} else {
 		    db = $cordovaSQLite.openDB("recipes.db");
-		    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recipes (id integer primary key, name text, category text, prep_time integer, cook_time integer, flags text, persons integer, ingredients text, directions text, image_source text)");
+		    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recipes (id integer primary key, name text, category text, prep_time integer, cook_time integer, rating integer, flags text, persons integer, ingredients text, directions text, image_source text)");
 		    console.log("database is null!");
 		}
                 return db;

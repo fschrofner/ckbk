@@ -38,6 +38,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 				currRecipe.category = currRow.category;
 				currRecipe.prep_time = currRow.prep_time;
 				currRecipe.cook_time = currRow.cook_time;
+				currRecipe.rating = currRow.rating;
 				
 				currRecipe.flags = JSON.parse(currRow.flags);
 				currRecipe.persons = currRow.persons;
@@ -285,6 +286,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			    $scope.recipe.category = currRow.category;
 			    $scope.recipe.prep_time = currRow.prep_time;
 			    $scope.recipe.cook_time = currRow.cook_time;
+				$scope.recipe.rating = currRow.rating;
 			    
 			    $scope.recipe.flags = JSON.parse(currRow.flags);
 			    $scope.recipe.persons = currRow.persons;			    
@@ -314,6 +316,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.recipe.category = "Lunch";
 	    $scope.recipe.prep_time = 0;
 	    $scope.recipe.cook_time = 0;
+		$scope.recipe.rating = 3;
 	    
 	    $scope.recipe.flags = [
 		{ text: "Vegan", checked: false },
@@ -329,6 +332,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    
 	    $scope.recipe.directions = [{text:""}];
 	    $scope.recipe.image_source = "https://farm6.staticflickr.com/5131/5413268570_f85d9fd78d_m_d.jpg";
+	}
+	
+	$scope.ratingButtonClicked =function(n) {
+		$scope.recipe.rating = n;
 	}
 	
 	$scope.decreasePersonCount =function() {
@@ -388,8 +395,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.recipeList.push(recipe)
 
 	    
-	    var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, flags, persons, ingredients, directions, image_source) VALUES (?,?,?,?,?,?,?,?,?,?)";
-	    var recipeParameter = [recipe.id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, JSON.stringify(recipe.flags), recipe.persons, JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions), recipe.image_source];
+	    var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, rating, flags, persons, ingredients, directions, image_source) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	    var recipeParameter = [recipe.id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, recipe.rating, JSON.stringify(recipe.flags), recipe.persons, JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions), recipe.image_source];
 
 	    var db = databaseService.getDatabase()
 	    
