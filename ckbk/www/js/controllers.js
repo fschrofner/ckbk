@@ -115,6 +115,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
     .controller('RecipeCtrl', function($scope, $location, $stateParams, $state, $cordovaSQLite, $cordovaFile, databaseService, $ionicPopup, $ionicLoading, $ionicPlatform, $ionicHistory) {
 	$scope.recipe = {};
 	$scope.photo = {};
+	$scope.oldPhotos = [];
 	
 	$scope.loadRecipe = function(){
 	    var db = databaseService.getDatabase();
@@ -225,15 +226,10 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    console.log("calculated height: " + height);
 	    
 	    ctx.drawImage(img, 0, 0, width, height);
-	    //ctx.createImageData(width, height);
 	    
-	    //var dataurl = canvas.toDataURL("image/png");
-	    //console.log("data url: " + dataurl);
+	    $scope.oldPhotos.push($scope.recipe.image_larger);
+	    $scope.oldPhotos.push($scope.recipe.image_smaller);
 	    
-	    //TODO: save data on disk/into db
-	    //TODO: create smaller thumbnail
-	    
-	    $scope.deleteCurrentPhotos();
 
 	    // write to file system
 	    var currentTime = Date.now();
@@ -294,31 +290,19 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 		});
 	}
 
-	$scope.deleteCurrentPhotos = function(){
-	    if($scope.recipe.image_larger != null && $scope.recipe.image_larger != ""){
-		var filename = $scope.recipe.image_larger.replace(/^.*[\\\/]/, '');
-		if($cordovaFile.checkFile(cordova.file.applicationStorageDirectory, filename)){
-		    $cordovaFile.removeFile(cordova.file.applicationStorageDirectory, filename).
-		    then(function(success){
-			console.log("file delete success");
-		    }, function(error){
-			console.log("file delete error");
-		    });
+	$scope.deletePhotos = function(_photos){
+	    for (var index in _photos){
+		if(_photos[index] != null && _photos[index] != ""){
+		    var filename = _photos[index].replace(/^.*[\\\/]/, '');
+		    if($cordovaFile.checkFile(cordova.file.applicationStorageDirectory, filename)){
+			$cordovaFile.removeFile(cordova.file.applicationStorageDirectory, filename).
+			    then(function(success){
+				console.log("file delete success");
+			    }, function(error){
+				console.log("file delete error");
+			    });
+		    }
 		}
-		$scope.recipe.image_larger = "";
-	    }
-
-	    if($scope.recipe.image_smaller != null && $scope.recipe.image_smaller != ""){
-		var filename = $scope.recipe.image_smaller.replace(/^.*[\\\/]/, '');
-		if($cordovaFile.checkFile(cordova.file.applicationStorageDirectory, filename)){
-		    $cordovaFile.removeFile(cordova.file.applicationStorageDirectory, filename).
-		    then(function(success){
-			console.log("file delete success");
-		    }, function(error){
-			console.log("file delete error");
-		    });
-		}
-		$scope.recipe.image_smaller = "";
 	    }
 	}
 	
@@ -368,12 +352,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $scope.recipe.directions.splice(_index, 1);
 	    $scope.apply();
 	}
-	
-	$scope.loadPhoto = function(){
-	    //TODO
-	}
 
 	$scope.saveRecipe = function(){
+	    //delete all old converted photos
+	    $scope.deletePhotos($scope.oldPhotos);
+	    
 	    //save recipe, then go to browse state
 	    var recipe = angular.copy($scope.recipe);
 
@@ -411,16 +394,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    })
 	    
 	    $ionicHistory.clearCache().then(function(){ $state.go('app.browse') });
-	    //$scope.$apply();
 	}
 
 	//when the view is ready, load the picture
 	$ionicPlatform.ready(function() {
 	    console.log("platform ready");
-	    //$scope.loadPhoto();
 	});
-
-	//$scope.toShow=true;
 	
 });
 
