@@ -114,6 +114,10 @@ $left-padding: 20px;
 body {
     font-family: OpenSansRegular;
 
+    input[type="file"] {
+	display: none;
+    }
+    
     #subheader-bar {
 	border-style: none;
     }
@@ -155,8 +159,6 @@ body {
 	background: white;
     }
 
-
-    
     .add-ingredient-button {
 	@extend .item;
 	@extend .item-divider;
@@ -269,6 +271,24 @@ body {
 	}
     }
 
+    .edit-photo-select-button{
+	@extend .item;
+	@extend .item-divider;
+	@extend .button;
+	@extend .button-full;
+	
+	margin-top: 0px;
+	margin-bottom: 0px;
+	color: $body-accent-font-color;
+	
+	background-color: $body-accent-color;
+	padding: 0px;
+
+	&:hover{
+	    color: $body-accent-font-color;
+	}
+    }
+    
     .edit-category{
 	padding-left: $left-padding;
     }
