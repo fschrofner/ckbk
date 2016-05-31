@@ -116,20 +116,18 @@
 	  <div class="col-25 col-center">
 	    <input type="text" placeholder="Ingredient" ng-model="item.ingredient">
 	  </div>
-	  <div class="col-20 col-center edit-ingredient-amount">
+	  <div class="col-25 col-center edit-ingredient-amount">
 	    <input type="number" placeholder="Amount" ng-model="item.amount">
 	  </div>
-	  <div class="col col-center">
-	    <label class="edit-ingredient-unit item item-input item-select">
-	      <select ng-model="item.unit">
-		<option>g</option>
-		<option>kg</option>
-		<option>ml</option>
-		<option>l</option>
-		<option>pckg</option>
-		<option>pc</option>
-	      </select>
-	    </label>
+	  <div class="edit-ingredient-unit-col col-40 col-center">
+	    <select class="edit-ingredient-unit" ng-model="item.unit">
+	      <option>pckg</option>
+	      <option>g</option>
+	      <option>kg</option>
+	      <option>ml</option>
+	      <option>l</option>
+	      <option>pc</option>
+	    </select>
 	  </div>
 	  <div class="remove-button col-10 col-center right">
 	    <button class="button button-icon ion-android-close" id="remove-ingredient-button" ng-click="removeIngredientField($index)">

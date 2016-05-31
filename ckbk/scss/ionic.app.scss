@@ -335,13 +335,15 @@ body {
 	
 	.remove-button{
 	    text-align: right;
-	    color: yellow;
 	}
 
+	.edit-ingredient-unit-col{
+	    text-align: right;
+	}
+	
 	.edit-ingredient-unit{
-	    height: 50px;
-	    width: 100%;
-	    padding: 0px;
+	    background-color: $body-accent-font-color;
+	    border:none;
 	}
     }
 
