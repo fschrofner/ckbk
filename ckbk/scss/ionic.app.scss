@@ -240,9 +240,13 @@ body {
     }
 
     .view-persons{
-	text-align:right;
-	width: 200px;
-	float:right;
+	height: auto;
+
+	.view-persons-text{
+	    display: inline-block;
+	    text-align: center;
+	    vertical-align: middle;
+	}
     }
     
     .view-ingredient{

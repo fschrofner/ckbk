@@ -76,13 +76,11 @@
 	<div class="view-headline col col-center">
 	  Ingredients:
 	</div>
-	<div class="col right">
-		<div class="view-headline col col-center">
-	    <span>Persons: </span>
-		<span class="button button-icon ion-minus" ng-click="decreasePersonCount()"/>
-		<span>{{recipe.persons}}</span>
-		<span class="button button-icon ion-plus" ng-click="increasePersonCount()"/>
-		</div>
+	<div class="col view-persons right">
+	    <div class="view-persons-text view-headline">Persons:</div>
+	    <button class="button button-icon ion-minus" ng-click="decreasePersonCount()"></button>
+	    <div class="view-persons-text view-headline">{{recipe.persons}}</div>
+	    <button class="button button-icon ion-plus" ng-click="increasePersonCount()"></button>
 	</div>
       </div>
       <div class="row item view-ingredient" ng-repeat="item in recipe.ingredients">
