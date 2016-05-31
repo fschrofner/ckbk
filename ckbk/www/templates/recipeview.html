@@ -20,11 +20,11 @@
 	  <div class="row">
 	    <div class="col">
 	      <div class="view-rating">
-		<button class="button button-icon ion-android-star"></button>
-		<button class="button button-icon ion-android-star"></button>
-		<button class="button button-icon ion-android-star"></button>
-		<button class="button button-icon ion-android-star-half"></button>
-		<button class="button button-icon ion-android-star-outline"></button>
+		<button class="button button-icon ion-android-star" ng-click="ratingButtonClicked(1)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 2, 'button button-icon ion-android-star-outline': recipe.rating < 2}" ng-click="ratingButtonClicked(2)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 3, 'button button-icon ion-android-star-outline': recipe.rating < 3}" ng-click="ratingButtonClicked(3)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 4, 'button button-icon ion-android-star-outline': recipe.rating < 4}" ng-click="ratingButtonClicked(4)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 5, 'button button-icon ion-android-star-outline': recipe.rating < 5}" ng-click="ratingButtonClicked(5)"></button>
 	      </div>		
 	    </div>	      
 	  </div>
@@ -66,9 +66,6 @@
 	      </span>
 	    </span>
 	  </div>
-	  
-	  
-	  
 	</div>
       </div>
     </div>
@@ -80,12 +77,12 @@
 	  Ingredients:
 	</div>
 	<div class="col right">
-	  <div class="view-persons">
-	    <label class="item item-input">
-	      <span class="input-label view-headline">Persons:</span>
-	      <input class="view-headline" type="number" ng-model="recipe.persons"/>
-	    </label>
-	  </div>
+		<div class="view-headline col col-center">
+	    <span>Persons: </span>
+		<span class="button button-icon ion-minus" ng-click="decreasePersonCount()"/>
+		<span>{{recipe.persons}}</span>
+		<span class="button button-icon ion-plus" ng-click="increasePersonCount()"/>
+		</div>
 	</div>
       </div>
       <div class="row item view-ingredient" ng-repeat="item in recipe.ingredients">

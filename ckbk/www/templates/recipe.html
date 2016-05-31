@@ -42,11 +42,11 @@
 	    <div class="row">
 	      <div class="col col-center">
 		<div class="view-rating">
-		  <button class="button button-icon ion-android-star"></button>
-		  <button class="button button-icon ion-android-star"></button>
-		  <button class="button button-icon ion-android-star"></button>
-		  <button class="button button-icon ion-android-star-half"></button>
-		  <button class="button button-icon ion-android-star-outline"></button>
+		  <button class="button button-icon ion-android-star" ng-click="ratingButtonClicked(1)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 2, 'button button-icon ion-android-star-outline': recipe.rating < 2}" ng-click="ratingButtonClicked(2)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 3, 'button button-icon ion-android-star-outline': recipe.rating < 3}" ng-click="ratingButtonClicked(3)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 4, 'button button-icon ion-android-star-outline': recipe.rating < 4}" ng-click="ratingButtonClicked(4)"></button>
+		  <button ng-class="{'button button-icon ion-android-star': recipe.rating >= 5, 'button button-icon ion-android-star-outline': recipe.rating < 5}" ng-click="ratingButtonClicked(5)"></button>
 		</div>		
 	      </div>	      
 	    </div>
