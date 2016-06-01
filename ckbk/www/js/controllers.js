@@ -228,6 +228,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			break;
 			case 1:
 			console.log("export pressed, id: " + currRecipe.id);
+			//TODO export recipe
+			$scope.saveToFile(currRecipe.name + ".json", angular.toJson(currRecipe));
 		    }
 		    return true;
 		},
@@ -237,6 +239,19 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 		}
 	    });
  	}
+	
+	$scope.saveToFile = function(_filename, _blob){
+	    $cordovaFile.writeFile(cordova.file.externalDataDirectory, _filename, _blob)
+		.then(function (success) {
+		    // success
+		    console.log("export success");
+		    
+		    $scope.$apply();
+		}, function (error) {
+		    // error
+		    console.log("file write error");
+		});
+	}
 	
 	$ionicPlatform.ready(function() {
 	    console.log("platform ready");
