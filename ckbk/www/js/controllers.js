@@ -288,6 +288,12 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	
 	$scope.importRecipe = function(){
 	    console.log('import');
+		fileChooser.open(function(uri) {
+			console.log("success filechooser");
+			alert(uri);
+		}, function() {
+			console.log("failure filechooser");
+		});
 	}
 	
     })
