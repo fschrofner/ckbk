@@ -210,7 +210,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $ionicActionSheet.show({
 		titleText: currRecipe.name,
 		buttons: [
-		    { text: 'Edit <i class="icon ion-edit"></i>'}
+		    { text: 'Edit <i class="icon ion-edit"></i>'},
+			{ text: 'Export <i class="icon ion-ios-download"></i>'}
 		],
 		destructiveText: 'Delete <i class="icon ion-trash-a"></i>',
 		cancelText: 'Cancel',
@@ -225,6 +226,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			console.log("edit pressed, id: " + currRecipe.id);
 			window.location.href='#/app/recipes/' + currRecipe.id;
 			break;
+			case 1:
+			console.log("export pressed, id: " + currRecipe.id);
 		    }
 		    return true;
 		},
