@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	$scope.recipeList = [];
     })
 
-    .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $cordovaFile, $ionicPlatform, $ionicActionSheet, $ionicPopup, $ionicHistory){
+    .controller('BrowseCtrl', function($scope, $location, databaseService, $cordovaSQLite, $cordovaFile, $ionicPlatform, $ionicActionSheet, $ionicPopup, $ionicHistory, $http){
 	$scope.filterFlags = {};
 
 	$scope.resetFilter = function() {
@@ -228,7 +228,7 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			break;
 			case 1:
 			console.log("export pressed, id: " + currRecipe.id);
-			$scope.saveToFile(currRecipe.name + ".json", angular.toJson(currRecipe));
+			$scope.saveToFile(currRecipe.name + "_recipe.json", angular.toJson(currRecipe));
 		    }
 		    return true;
 		},
@@ -290,7 +290,41 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    console.log('import');
 		fileChooser.open(function(uri) {
 			console.log("success filechooser");
-			alert(uri);
+			
+			if (uri.indexOf("_recipe.json") < 0) {
+				alert("This is not a recipe. Please choose another file.");
+			} else {
+				var serviceUrl = uri;
+				$http.get(serviceUrl).success(function (recipe) {
+					console.log(angular.toJson(recipe));
+					
+					$scope.recipeList.push(recipe)
+					
+					var id = Date.now() + Math.floor((Math.random() * 100) + 1);
+
+					var query = "INSERT OR REPLACE INTO recipes (id, name, category, prep_time, cook_time, rating, flags, persons, ingredients, directions, image_larger, image_smaller) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+					var recipeParameter = [id, recipe.name, recipe.category, recipe.prep_time, recipe.cook_time, recipe.rating, JSON.stringify(recipe.flags), recipe.persons, JSON.stringify(recipe.ingredients), JSON.stringify(recipe.directions), "", ""];
+
+					var db = databaseService.getDatabase()
+					
+					console.log("recipe name: " + recipe.name);
+					
+					if(db){
+					console.log("database not null");
+					} else {
+					console.log("database null");
+					}
+					
+						$cordovaSQLite.execute(db, query, recipeParameter).then(function(res) {
+						console.log("INSERT ID -> " + res.insertId);
+						}, function (err) {
+						console.error(err);
+						});
+					
+					
+				});
+			}
+			
 		}, function() {
 			console.log("failure filechooser");
 		});
