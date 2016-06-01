@@ -58,7 +58,7 @@ $left-padding: 20px;
     color: $header-font-color;
     text-align: center;
 
-    #menu-button, #create-button, #recipe-save-button, #edit-button {
+    #menu-button, #create-button, #import-button, #recipe-save-button, #edit-button {
 	@extend .header;
     }
 
