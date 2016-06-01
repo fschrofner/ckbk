@@ -243,8 +243,8 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    $cordovaFile.writeFile(cordova.file.externalDataDirectory, _filename, _json)
 		.then(function (success) {
 		    // success
-			//TODO: add dialog
 		    console.log("export success");
+			alert("Recipt exported successfully to \"Android/data/com.ionicframework.ckbk*/files\"");
 		    $scope.$apply();
 		}, function (error) {
 		    // error
@@ -315,13 +315,13 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 					console.log("database null");
 					}
 					
-						$cordovaSQLite.execute(db, query, recipeParameter).then(function(res) {
-						console.log("INSERT ID -> " + res.insertId);
-						}, function (err) {
-						console.error(err);
-						});
+					$cordovaSQLite.execute(db, query, recipeParameter).then(function(res) {
+					console.log("INSERT ID -> " + res.insertId);
+					}, function (err) {
+					console.error(err);
+					});
 					
-					
+					$scope.loadRecipes();
 				});
 			}
 			
