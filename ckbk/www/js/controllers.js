@@ -228,7 +228,6 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 			break;
 			case 1:
 			console.log("export pressed, id: " + currRecipe.id);
-			//TODO export recipe
 			$scope.saveToFile(currRecipe.name + ".json", angular.toJson(currRecipe));
 		    }
 		    return true;
@@ -240,16 +239,16 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	    });
  	}
 	
-	$scope.saveToFile = function(_filename, _blob){
-	    $cordovaFile.writeFile(cordova.file.externalDataDirectory, _filename, _blob)
+	$scope.saveToFile = function(_filename, _json){
+	    $cordovaFile.writeFile(cordova.file.externalDataDirectory, _filename, _json)
 		.then(function (success) {
 		    // success
+			//TODO: add dialog
 		    console.log("export success");
-		    
 		    $scope.$apply();
 		}, function (error) {
 		    // error
-		    console.log("file write error");
+		    console.log("export error");
 		});
 	}
 	
@@ -286,6 +285,11 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 		$scope.loadRecipes();
 	    });
 	}
+	
+	$scope.importRecipe = function(){
+	    console.log('import');
+	}
+	
     })
 
     .controller('RecipeCtrl', function($scope, $location, $stateParams, $state, $cordovaSQLite, $cordovaFile, databaseService, $ionicPopup, $ionicLoading, $ionicPlatform, $ionicHistory) {
