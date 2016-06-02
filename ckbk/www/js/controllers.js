@@ -557,10 +557,15 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 	}
 	
 	$scope.decreasePersonCount =function() {
+	    //only allow to decrease down to 1 person
+	    if($scope.recipe.persons > 1){
 		for(var i = 0; i < $scope.recipe.ingredients.length; i++) {
-			$scope.recipe.ingredients[i].amount=($scope.recipe.ingredients[i].amount/$scope.recipe.persons)*($scope.recipe.persons-1);	
+		    $scope.recipe.ingredients[i].amount=($scope.recipe.ingredients[i].amount/$scope.recipe.persons)*($scope.recipe.persons-1);	
 		}
 		$scope.recipe.persons=$scope.recipe.persons-1;
+	    } else {
+		//do nothing
+	    }
 	}
 	
 	$scope.increasePersonCount =function() {
